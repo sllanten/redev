@@ -1,0 +1,168 @@
+console.log("corriendo script");
+hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
+console.log(hashCode('123'));
+
+let datos = [];
+let filtrados = [];
+let pagina = 1;
+const registrosPorPagina = 10;
+
+document.addEventListener("DOMContentLoaded", () => {
+    $('#tablaDatos').empty();
+
+    $('#sub').addClass('colorWarnin');
+
+    $('#list').addClass('disabledLink');
+
+    $('#btnExit').addClass('oculto');
+
+    $('#list').removeClass('colorWarnin');
+
+
+    $('#cod').attr('disabled', false);
+    $('#btnSend').attr('disabled', false); 
+
+});
+
+function getCode() {
+    let has= hashCode(document.getElementById('cod').value);
+    return has.toString();
+}
+
+async function sendCode() {
+    const codeValue = getCode();
+    if (codeValue == "") return;
+
+    try {
+        const response = await fetch('http://devsllanten.com/api/validateCode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code: codeValue })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+        validateResp(jsonData['status'], jsonData['textInfo'])
+        if (jsonData['info'] === 403) return;
+        if (jsonData['info'].length === 0) viewToas("No tienes activa una suscripcion para ver List Dark");
+        datos = jsonData['info'];
+        filtrados = [...datos];
+        pagina = 1;
+
+        mostrarPagina();
+
+    } catch (error) {
+        console.error('Ocurrió un error #1:', error);
+    }
+}
+
+function validateResp(status, message) {
+    if (parseInt(status) == 200) {
+        activeApp();
+        viewToas(message);
+    }
+
+    if (parseInt(status) == 403) {
+        document.getElementById('cod').value = "";
+        viewToas(message);
+    }
+}
+
+function viewToas(message) {
+    document.getElementById('toastLabel').textContent = message;
+
+    var toastEl = document.getElementById('infoToast');
+    var toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
+
+function activeApp() {
+    $('#list').removeClass('disabledLink');
+    
+    $('#btnExit').removeClass('oculto');
+
+    $('#list').addClass('colorWarnin');
+
+    $('#cod').attr('disabled', true);
+    $('#btnSend').attr('disabled', true);
+
+}
+
+function exitApp(){
+    $('#tablaDatos').empty();
+
+    document.getElementById('cod').value= "";
+
+    $('#list').addClass('disabledLink');
+    
+    $('#btnExit').addClass('oculto');
+
+    $('#list').removeClass('colorWarnin');
+
+
+    $('#cod').attr('disabled', false);
+    $('#btnSend').attr('disabled', false); 
+
+    viewToas("Has finalizado la sección");
+}
+
+function test(e) {
+    e.preventDefault();
+    $('#modaCont').modal('show');
+}
+
+
+const mostrarPagina = () => {
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = inicio + registrosPorPagina;
+    const datosPagina = filtrados.slice(inicio, fin);
+
+    $('#tablaDatos').empty();
+
+    datosPagina.forEach(item => {
+        $('#tablaDatos').append(`
+            <tr>
+                <th scope="row">${item.id}</th>
+                <td>${item.red}</td>
+                <td>${item.pass}</td>
+                <td>${item.fecha}</td>
+            </tr>
+        `);
+    });
+
+    $('#paginaActual').text(pagina);
+    $('#anterior').prop('disabled', pagina === 1);
+    $('#siguiente').prop('disabled', fin >= filtrados.length);
+};
+
+$('#anterior').click(() => {
+    if (pagina > 1) {
+        pagina--;
+        mostrarPagina();
+    }
+});
+
+$('#siguiente').click(() => {
+    if ((pagina * registrosPorPagina) < filtrados.length) {
+        pagina++;
+        mostrarPagina();
+    }
+});
+
+$('#filtroNombre').on('input', () => {
+    const filtro = $('#filtroNombre').val().toLowerCase();
+    filtrados = datos.filter(item => item.red.toLowerCase().includes(filtro));
+    pagina = 1;
+    mostrarPagina();
+});
+
+
+function closeMod() {
+    $('#modaCont').modal('hide');
+
+}
