@@ -1,22 +1,38 @@
-console.log("corriendo script");
-hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
+console.log("corriendo script Login");
 
-function getCode() {
-    let has = hashCode(document.getElementById('code').value);
-    return has.toString();
+async function sendCode() {
+    const codeValue = getCode('code');
+    if (codeValue == "") return;
+
+    try {
+        const response = await fetch('http://devsllanten.com/api/validateLogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code: codeValue })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+
+        parseInt(jsonData['status']) === 200
+            ? window.location.href = "http://devsllanten.com/admin/dasboard"
+            : parseInt(jsonData['status']) === 403
+                ? viewToas(jsonData['message'])
+                : null;
+
+    } catch (error) {
+        console.error('Ocurrió un error #1:', error);
+    }
 }
 
 function validate(){
-    let has= getCode();
+    let has= getCode('code');
     if (has == "" || has == 0) return;
     if(document.getElementById('term').checked == false) return;
-    console.log("cumple criterios");
-}
-
-function messageToast(message){
-    document.getElementById('toastLabel').textContent = message;
-
-    var toastEl = document.getElementById('infoToast');
-    var toast = new bootstrap.Toast(toastEl);
-    toast.show();
+    sendCode();
 }

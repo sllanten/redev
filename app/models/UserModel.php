@@ -46,4 +46,10 @@ class UserModel extends Model
         $stmt = $this->db->prepare("DELETE FROM usuario WHERE id = :id");
         return $stmt->execute([':id' => $id]);
     }
+
+    public function getLogin($codigo){
+        $stmt = $this->db->prepare("SELECT id FROM usuario WHERE codigo = :codigo AND rol = 1");
+        $stmt->execute([':codigo' => $codigo]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

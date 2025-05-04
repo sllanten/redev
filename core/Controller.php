@@ -24,4 +24,25 @@ class Controller
         $styles  = $assets['css'] ?? [];
         $scripts = $assets['js']  ?? [];
     }
+
+    protected function config(){
+        $conf = configApp();
+        return $conf['urlBase'];
+    }
+
+    protected function guardMidware(){
+        session_start();
+        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+            header('Location: '. $this->config());
+            exit();
+        }
+    }
+
+    protected function exitApp(){
+        session_start();
+        session_unset();     
+        session_destroy();
+        header('Location: '. $this->config());
+        exit;
+    }    
 }

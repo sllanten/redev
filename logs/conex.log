@@ -450,3 +450,51 @@ Stack trace:
 [2025-04-30 23:31:59] 404 Not Found: favicon.ico
 [2025-04-30 23:33:30] 404 Not Found: favicon.ico
 [2025-04-30 23:34:09] 404 Not Found: favicon.ico
+2025/05/04 11:20:28 [error] 3694#3694: *13 FastCGI sent in stderr: "PHP message: PHP Warning:  Array to string conversion in /var/www/devsllanten/app/controllers/ApiController.php on line 65" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "POST /api/validateLogin HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com", referrer: "http://devsllanten.com/admin"
+2025/05/04 11:23:11 [error] 3692#3692: *17 FastCGI sent in stderr: "PHP message: PHP Warning:  Array to string conversion in /var/www/devsllanten/app/controllers/ApiController.php on line 65" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /api/validateLogin HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 16:23:11] 404 Not Found: favicon.ico
+[2025-05-04 16:23:29] 404 Not Found: favicon.ico
+[2025-05-04 16:25:38] 404 Not Found: favicon.ico
+[2025-05-04 16:55:05] 404 Not Found: login
+[2025-05-04 16:55:05] 404 Not Found: favicon.ico
+[2025-05-04 16:55:47] 404 Not Found: login
+[2025-05-04 16:55:47] 404 Not Found: favicon.ico
+[2025-05-04 16:56:01] 404 Not Found: login
+[2025-05-04 16:56:01] 404 Not Found: favicon.ico
+[2025-05-04 16:56:13] 404 Not Found: login
+[2025-05-04 16:56:39] 404 Not Found: login
+[2025-05-04 16:56:39] 404 Not Found: favicon.ico
+[2025-05-04 16:56:42] 404 Not Found: login
+[2025-05-04 16:56:42] 404 Not Found: favicon.ico
+[2025-05-04 16:58:12] 404 Not Found: favicon.ico
+2025/05/04 11:58:20 [error] 3692#3692: *59 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 29) in /var/www/devsllanten/core/Controller.php on line 29" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 16:58:20] 404 Not Found: favicon.ico
+2025/05/04 11:58:31 [error] 3692#3692: *59 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 29) in /var/www/devsllanten/core/Controller.php on line 29" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 16:58:31] 404 Not Found: favicon.ico
+[2025-05-04 16:58:45] 404 Not Found: favicon.ico
+[2025-05-04 18:09:07] 404 Not Found: favicon.ico
+2025/05/04 13:09:27 [error] 3693#3693: *86 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 37) in /var/www/devsllanten/core/Controller.php on line 37" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 18:09:27] 404 Not Found: favicon.ico
+2025/05/04 13:09:28 [error] 3693#3693: *86 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 37) in /var/www/devsllanten/core/Controller.php on line 37" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+2025/05/04 13:09:29 [error] 3693#3693: *86 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 37) in /var/www/devsllanten/core/Controller.php on line 37" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+2025/05/04 13:09:29 [error] 3693#3693: *86 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 37) in /var/www/devsllanten/core/Controller.php on line 37" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 18:10:47] 404 Not Found: favicon.ico
+[2025-05-04 18:13:15] 404 Not Found: favicon.ico
+[2025-05-04 18:13:24] 404 Not Found: favicon.ico
+[2025-05-04 18:13:53] 404 Not Found: favicon.ico
+[2025-05-04 18:13:54] 404 Not Found: favicon.ico
+2025/05/04 13:17:17 [error] 3693#3693: *114 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 35) in /var/www/devsllanten/core/Controller.php on line 35" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+2025/05/04 13:17:33 [error] 3693#3693: *114 FastCGI sent in stderr: "PHP message: PHP Notice:  session_start(): Ignoring session_start() because a session is already active (started from /var/www/devsllanten/core/Controller.php on line 35) in /var/www/devsllanten/core/Controller.php on line 35" while reading response header from upstream, client: 127.0.0.1, server: devsllanten.com, request: "GET /admin/dasboard HTTP/1.1", upstream: "fastcgi://unix:/run/php/php8.4-fpm.sock:", host: "devsllanten.com"
+[2025-05-04 18:26:37] 404 Not Found: favicon.ico
+[2025-05-04 18:27:25] 404 Not Found: favicon.ico
+[2025-05-04 18:28:13] 404 Not Found: favicon.ico
+[2025-05-04 18:29:34] 404 Not Found: favicon.ico
+[2025-05-04 20:02:57] 404 Not Found: favicon.ico
+[2025-05-04 20:03:20] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:06] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:07] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:07] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:08] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:08] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:08] 404 Method Not Found: AdminController@exitAdmin
+[2025-05-04 20:04:08] 404 Method Not Found: AdminController@exitAdmin

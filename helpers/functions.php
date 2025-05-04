@@ -1,8 +1,7 @@
 <?php
 
 if (!function_exists('dd')) {
-    function dd($data)
-    {
+    function dd($data){
         var_dump($data);
         die();
     }
@@ -24,7 +23,8 @@ function configApp(){
    return $data= [
         "tokenApi" => "951321Dev",
         "tokenAcceso" => "-20223528",
-        "tokenLink"=> "javascript:void(0);"
+        "tokenLink"=> "javascript:void(0);",
+        "urlBase" => "http://devsllanten.com/"
     ];
 }
 
