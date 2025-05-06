@@ -42,7 +42,5 @@ class Controller
         session_start();
         session_unset();     
         session_destroy();
-        header('Location: '. $this->config());
-        exit;
     }    
 }

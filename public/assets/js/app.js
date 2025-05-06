@@ -13,3 +13,24 @@ function viewToas(message) {
     var toast = new bootstrap.Toast(toastEl);
     toast.show();
 }
+
+async function salir() {
+    try {
+        const response = await fetch('http://devsllanten.com/admin/exitDasboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const data = await response.json();
+        parseInt(data['status']) === 200 ? window.location.href = "http://devsllanten.com" : null;
+
+    } catch (error) {
+        console.error('Ocurrió un error #1:', error);
+    }
+}

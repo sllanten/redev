@@ -15,11 +15,28 @@ class AdminController extends Controller
     public function dasboard(){
         $this->guardMidware();
         $this->view('dasboard', [
-            'title' => 'Devsllanten'
+            'title' => 'Devsllanten',
+            'css' => ['/assets/css/dasboard.css'],
+            'js' => ['/assets/js/app.js']
+
         ]);
     }
 
     public function exitDasboard(){
         $this->exitApp();
+        $response = [
+            'status'    => 200
+        ];
+        echo json_encode($response);
+    }
+
+    public function adminConf(){
+        $this->guardMidware();
+        $this->view('configuracion', [
+            'title' => 'Devsllanten',
+            'css' => ['/assets/css/dasboard.css'],
+            'js' => ['/assets/js/app.js']
+
+        ]);
     }
 }
