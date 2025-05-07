@@ -5,6 +5,7 @@ class AdminController extends Controller
 {
     
     public function index(){
+        $this->validateMidware();
         $this->view('login', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/login.css'],
@@ -18,7 +19,6 @@ class AdminController extends Controller
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js']
-
         ]);
     }
 
@@ -36,7 +36,15 @@ class AdminController extends Controller
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js']
-
         ]);
+    }
+
+    public function adminListDark(){
+        $this->guardMidware();
+        $this->view('listdark', [
+            'title' => 'Devsllanten',
+            'css' => ['/assets/css/dasboard.css'],
+            'js' => ['/assets/js/app.js']
+        ]);        
     }
 }

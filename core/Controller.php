@@ -42,5 +42,13 @@ class Controller
         session_start();
         session_unset();     
         session_destroy();
-    }    
+    }
+
+    protected function validateMidware(){
+        $url= $this->config()."/admin/adminConf";
+        session_start();
+        if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == true) {
+            header('Location: ' . $url);
+        }
+    }
 }

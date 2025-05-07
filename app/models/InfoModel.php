@@ -6,7 +6,7 @@ class InfoModel extends Model
     public function getId($codigo): array{
         $stmt = $this->db->prepare("SELECT id FROM usuario WHERE codigo= :codigo");
         $stmt->execute([':codigo' => $codigo]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOnly(int $id): ?array{

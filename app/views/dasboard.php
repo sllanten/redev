@@ -47,7 +47,7 @@
                         <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="list" onclick="">List Dark</a>
+                        <a class="nav-link devLink" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -82,7 +82,7 @@
                 <div>
                     <h2>List Dark</h2>
                     <p>La opción List Dark permite gestionar redes del sistema. Desde aquí se puede actualizar la información de redes existentes, registrar nuevas conexiones o eliminar redes no deseadas ademas de reportar fallos.</p>
-                    <a href="#" class="btn btn-primary">
+                    <a href="http://devsllanten.com/admin/adminListDark" class="btn btn-primary">
                         Ir a List Dark
                     </a>
                 </div>
