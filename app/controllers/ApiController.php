@@ -13,7 +13,7 @@ class ApiController extends Controller
         return $status;
     }
 
-    public function getId($code){
+    public function getIdUser($code){
         $infoModel = $this->model('InfoModel');
         $rows = $infoModel->getId($code);
         return (int)$rows['id'];
@@ -26,10 +26,10 @@ class ApiController extends Controller
         $code = $data['code'];
 
         $status = $this->getStatus($code);
-        $idUser= $this->getId($code);
+        $idUser= $this->getIdUser($code);
 
         $infoModel = $this->model('InfoModel');
-        $rows = $infoModel->getUser($idUser);
+        $rows = $infoModel->getSuscription($idUser);
 
         if ($status == 200) {
             $response = [
@@ -47,6 +47,31 @@ class ApiController extends Controller
         }
 
         echo json_encode($response);
+    }
+
+    public function validateLogin(){
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $code = $data['code'] ?? '';
+
+        $userModel = $this->model('UserModel');
+        $user = $userModel->getLogin($code);
+
+        if ($user) {
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['logged_in'] = true;
+
+            echo json_encode(['status' => 200]);
+        } else {
+            echo json_encode(['status' => 403, 'message' => 'Código inválido']);
+        }
     }
 
 

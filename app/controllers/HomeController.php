@@ -17,7 +17,7 @@ class HomeController extends Controller
             'textInfo'=> 'Welcome guest, enjoy!',
             'tokenLink'=> $this->tokenLink,
             'css' => ['/assets/css/home.css'],
-            'js'  => ['/assets/js/home.js']
+            'js'  => ['/assets/js/app.js','/assets/js/home.js']
         ]);
     }
 }

@@ -1,0 +1,10 @@
+.devLink:hover {
+    color: var(--bs-warning) !important;
+    transition: color 0.3s ease;
+}
+.active{
+    color: var(--bs-warning) !important;
+}
+.devBtn {
+    width: 66px;
+}

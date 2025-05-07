@@ -1,0 +1,36 @@
+console.log("corriendo script App");
+hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
+
+function getCode(input) {
+    let has = hashCode(document.getElementById(input).value);
+    return has.toString();
+}
+
+function viewToas(message) {
+    document.getElementById('toastLabel').textContent = message;
+
+    var toastEl = document.getElementById('infoToast');
+    var toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
+
+async function salir() {
+    try {
+        const response = await fetch('http://devsllanten.com/admin/exitDasboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const data = await response.json();
+        parseInt(data['status']) === 200 ? window.location.href = "http://devsllanten.com" : null;
+
+    } catch (error) {
+        console.error('Ocurrió un error #1:', error);
+    }
+}

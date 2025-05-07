@@ -1,6 +1,4 @@
-console.log("corriendo script");
-hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
-console.log(hashCode('123'));
+console.log("corriendo script Home");
 
 let datos = [];
 let filtrados = [];
@@ -24,13 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function getCode() {
-    let has= hashCode(document.getElementById('cod').value);
-    return has.toString();
-}
-
 async function sendCode() {
-    const codeValue = getCode();
+    const codeValue = getCode('cod');
     if (codeValue == "") return;
 
     try {
@@ -49,7 +42,7 @@ async function sendCode() {
         const jsonData = await response.json();
         validateResp(jsonData['status'], jsonData['textInfo'])
         if (jsonData['info'] === 403) return;
-        if (jsonData['info'].length === 0) viewToas("No tienes activa una suscripcion para ver List Dark");
+        if (jsonData['info'].length === 0) viewToas("No tienes activa una suscripcion.");
         datos = jsonData['info'];
         filtrados = [...datos];
         pagina = 1;
@@ -71,14 +64,6 @@ function validateResp(status, message) {
         document.getElementById('cod').value = "";
         viewToas(message);
     }
-}
-
-function viewToas(message) {
-    document.getElementById('toastLabel').textContent = message;
-
-    var toastEl = document.getElementById('infoToast');
-    var toast = new bootstrap.Toast(toastEl);
-    toast.show();
 }
 
 function activeApp() {
@@ -115,7 +100,6 @@ function test(e) {
     e.preventDefault();
     $('#modaCont').modal('show');
 }
-
 
 const mostrarPagina = () => {
     const inicio = (pagina - 1) * registrosPorPagina;
@@ -161,8 +145,6 @@ $('#filtroNombre').on('input', () => {
     mostrarPagina();
 });
 
-
 function closeMod() {
     $('#modaCont').modal('hide');
-
 }

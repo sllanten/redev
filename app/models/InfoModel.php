@@ -3,21 +3,12 @@ require_once __DIR__ . '/../../core/Model.php';
 
 class InfoModel extends Model
 {
-    /**
-     * Obtiene todos los registros de la tabla `info`
-     * @return array
-     */
     public function getId($codigo): array{
         $stmt = $this->db->prepare("SELECT id FROM usuario WHERE codigo= :codigo");
         $stmt->execute([':codigo' => $codigo]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Obtiene un solo registro por ID
-     * @param int $id
-     * @return array|null
-     */
     public function getOnly(int $id): ?array{
         $stmt = $this->db->prepare("SELECT * FROM info WHERE id = :id");
         $stmt->execute([':id' => $id]);
@@ -25,11 +16,7 @@ class InfoModel extends Model
         return $result ?: null;
     }    
 
-    /**
-     * Obtiene los registros de un usuario
-     * @return array|null
-     */
-    public function getUser(int $id): ?array{
+    public function getSuscription(int $id): ?array{
         $stmt = $this->db->prepare("
         SELECT 
             i.id,
@@ -49,11 +36,6 @@ class InfoModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }    
 
-    /**
-     * Guarda un nuevo registro en la tabla `info`
-     * @param array $data (espera ['red' => 'valor', 'pass' => 'valor'])
-     * @return bool
-     */
     public function saveData(array $data): bool{
         $stmt = $this->db->prepare("INSERT INTO info (red, pass, fechareg, fechamod) VALUES (:red, :pass, :fechareg, :fechamod)");
         return $stmt->execute([
@@ -64,12 +46,6 @@ class InfoModel extends Model
         ]);
     }
 
-    /**
-     * Actualiza un registro existente por ID
-     * @param int $id
-     * @param array $data (espera ['red' => 'valor', 'pass' => 'valor'])
-     * @return bool
-     */
     public function upData(int $id, array $data): bool{
         $fecha = getYear();
         $stmt = $this->db->prepare("UPDATE info SET red = :red, pass = :pass , fechamod= :fechamod WHERE id = :id");
@@ -81,11 +57,6 @@ class InfoModel extends Model
         ]);
     }
 
-    /**
-     * Elimina un registro por ID
-     * @param int $id
-     * @return bool
-     */
     public function delData(int $id): bool{
         $stmt = $this->db->prepare("DELETE FROM info WHERE id = :id");
         return $stmt->execute([':id' => $id]);
