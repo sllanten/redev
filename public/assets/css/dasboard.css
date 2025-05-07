@@ -5,3 +5,6 @@
 .active{
     color: var(--bs-warning) !important;
 }
+.devBtn {
+    width: 66px;
+}
