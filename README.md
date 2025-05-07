@@ -39,6 +39,5 @@
 > 🎯 Comunidades residenciales  
 > 💼 Espacios de coworking  
 > 🎪 Eventos temporales  
-> 🏢 Pequeñas y medianas empresas  
 
 Con una estructura sostenible y completamente gestionada, `xlRedDev` redefine la forma de ofrecer conectividad segura en el mundo moderno.
