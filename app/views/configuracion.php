@@ -47,7 +47,7 @@
                         <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="list" onclick="">List Dark</a>
+                        <a class="nav-link devLink" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -206,9 +206,15 @@
 
     <!-- Page-->
     <div class="container px-4 py-5" id="hanging-icons">
-        <h2 class="pb-2 border-bottom">Configuration</h2>
+        <div>
+            <h2 class="pb-2 border-bottom">Configuration</h2>
+            <p>A través de esta opción, el administrador puede acceder a la configuración general para realizar ajustes clave. Permite modificar parámetros operativos del sistema, gestionar mensajes del entorno.</p>
+            <a href="http://devsllanten.com/admin/dasboard" class="btn btn-primary">
+                Ir a Dasboard
+            </a>
+        </div>
 
-        <h2 class="pb-2 py-3">Mensajes</h2>
+        <h2 class="pb-2 py-4">Mensajes</h2>
         <div class="form-floating mb-3 text-black">
             <input type="search" class="form-control" id="searchMessage" placeholder="SearchMessage Example">
             <label for="searchMessage">Buscar Mensaje</label>
@@ -328,7 +334,7 @@
                 <tbody class="text-white">
                     <tr>
                         <th scope="row">1</th>
-                        <td>Obtiene la List Dark</td>
+                        <td>Obtiene la list Dark</td>
                         <td class="text-break">http://devsllanten.com/api/validateCode</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -338,7 +344,7 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <td>Genera la suscripcion</td>
+                        <td>Genera la Suscripcion</td>
                         <td class="text-break">http://devsllanten.com/api/createSubs</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -349,7 +355,7 @@
                     <tr>
                     <tr>
                         <th scope="row">3</th>
-                        <td>Optiene las suscripciones</td>
+                        <td>Optiene las Suscripciones</td>
                         <td class="text-break">http://devsllanten.com/api/getSubs</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -359,7 +365,7 @@
                     </tr>
                     <tr>
                         <th scope="row">4</th>
-                        <td>Valida el ingreso al dasboard</td>
+                        <td>Valida el ingreso al Dasboard</td>
                         <td class="text-break">http://devsllanten.com/api/validateLogin</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -369,7 +375,7 @@
                     </tr>
                     <tr>
                         <th scope="row">5</th>
-                        <td>Obtiene todos los mensajes</td>
+                        <td>Obtiene todos los Mensajes</td>
                         <td class="text-break">http://devsllanten.com/api/message</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -379,7 +385,7 @@
                     </tr>
                     <tr>
                         <th scope="row">6</th>
-                        <td>Obtiene mensajes del sistema para usuarios guest</td>
+                        <td>Obtiene Mensajes del sistema para usuarios guest</td>
                         <td class="text-break">http://devsllanten.com/api/messageGuest</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
@@ -389,7 +395,7 @@
                     </tr>
                     <tr>
                         <th scope="row">7</th>
-                        <td>Obtiene los endpoint</td>
+                        <td>Obtiene los EndPoint</td>
                         <td class="text-break">http://devsllanten.com/api/getEndpoint</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>

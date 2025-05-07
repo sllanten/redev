@@ -31,14 +31,14 @@ class ApiController extends Controller
         $infoModel = $this->model('InfoModel');
         $rows = $infoModel->getSuscription($idUser);
 
-        if ($status == 200) {
+        if ((int)$status == 200) {
             $response = [
                 'status'    => $status,
                 'textInfo' => '✅ Código correcto, acceso concedido.',
                 'info'=> $rows
             ];
         }
-        if ($status == 403) {
+        if ((int)$status == 403) {
             $response = [
                 'status'    => $status,
                 'textInfo' => '❌ Código inválido, acceso denegado.',
