@@ -5,6 +5,7 @@ class AdminController extends Controller
 {
     
     public function index(){
+        $this->validateMidware();
         $this->view('login', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/login.css'],
