@@ -26,7 +26,12 @@ class AdminController extends Controller
         $this->view('admin.dasboard', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'nav' => [
+                    'file' => 'navbar'
+                ]
+            ]
         ]);
     }
 
@@ -35,7 +40,12 @@ class AdminController extends Controller
         $this->view('admin.configuracion', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'nav' => [
+                    'file' => 'navbar'
+                ]
+            ]
         ]);
     }
 
@@ -44,7 +54,12 @@ class AdminController extends Controller
         $this->view('admin.listdark', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'nav' => [
+                    'file' => 'navbar'
+                ]
+            ]
         ]);        
     }
 }

@@ -9,13 +9,37 @@ class Controller
     public function view($view, $data = [], array $assets = []){
         $this->dataView($data,$assets);
 
+        extract($data);
+
+        $component = [];
+
+        if (!empty($data['components']) && is_array($data['components'])) {
+            foreach ($data['components'] as $key => $comp) {
+                $file = $comp['file'] ?? null;
+                $compData = $comp['data'] ?? [];
+
+                if ($file) {
+                    $path = __DIR__ . '/../app/views/components/' . $file . '.php';
+
+                    if (file_exists($path)) {
+                        extract($compData);
+                        ob_start();
+                        require $path;
+                        $component[$key] = ob_get_clean();
+                    } else {
+                        $component[$key] = "<!-- Componente '$file' no encontrado -->";
+                    }
+                }
+            }
+        }
+
         $viewPath = str_replace('.', '/', $view);
         $file = __DIR__ . '/../app/views/' . $viewPath . '.php';
 
-        if (file_exists($file)){
-            require_once $file;
-        }else{
-            echo "⚠️ La vista '$viewPath.php' no se encontró en /app/views/";
+        if(file_exists($file)) {
+            require $file;
+        }else {
+            echo "⚠️ La vista '$viewPath.php' no se encontró.";
         }
     }
 
