@@ -8,7 +8,15 @@ class Controller
      */
     public function view($view, $data = [], array $assets = []){
         $this->dataView($data,$assets);
-        require_once __DIR__ . '/../app/views/' . $view . '.php';
+
+        $viewPath = str_replace('.', '/', $view);
+        $file = __DIR__ . '/../app/views/' . $viewPath . '.php';
+
+        if (file_exists($file)){
+            require_once $file;
+        }else{
+            echo "⚠️ La vista '$viewPath.php' no se encontró en /app/views/";
+        }
     }
 
     public function model($model){

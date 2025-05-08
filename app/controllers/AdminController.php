@@ -13,26 +13,26 @@ class AdminController extends Controller
         ]);
     }
 
-    public function dasboard(){
-        $this->guardMidware();
-        $this->view('dasboard', [
-            'title' => 'Devsllanten',
-            'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
-        ]);
-    }
-
     public function exitDasboard(){
         $this->exitApp();
         $response = [
             'status'    => 200
         ];
         echo json_encode($response);
+    }    
+
+    public function dasboard(){
+        $this->guardMidware();
+        $this->view('admin.dasboard', [
+            'title' => 'Devsllanten',
+            'css' => ['/assets/css/dasboard.css'],
+            'js' => ['/assets/js/app.js']
+        ]);
     }
 
     public function adminConf(){
         $this->guardMidware();
-        $this->view('configuracion', [
+        $this->view('admin.configuracion', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js']
@@ -41,7 +41,7 @@ class AdminController extends Controller
 
     public function adminListDark(){
         $this->guardMidware();
-        $this->view('listdark', [
+        $this->view('admin.listdark', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js']
