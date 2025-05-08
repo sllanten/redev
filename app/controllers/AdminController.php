@@ -28,9 +28,12 @@ class AdminController extends Controller
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js'],
             'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
                 'nav' => [
                     'file' => 'navbar'
-                ]
+                ]              
             ]
         ]);
     }
@@ -42,6 +45,9 @@ class AdminController extends Controller
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js'],
             'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
                 'nav' => [
                     'file' => 'navbar'
                 ]
@@ -56,6 +62,9 @@ class AdminController extends Controller
             'css' => ['/assets/css/dasboard.css'],
             'js' => ['/assets/js/app.js'],
             'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
                 'nav' => [
                     'file' => 'navbar'
                 ]

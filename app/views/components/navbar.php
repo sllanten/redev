@@ -1,7 +1,7 @@
     <br>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a href="#" class="text-decoration-none navbar-brand"">
+            <a href="<?= $data['tokenLink']; ?>" class="text-decoration-none navbar-brand"">
                 <i class=" bi bi-code-square me-1"></i> Devsllanten
             </a>
 
@@ -13,13 +13,13 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="http://devsllanten.com/admin/dasboard">Dasboard</a>
+                        <a class="nav-link" href="http://devsllanten.com/admin/dasboard">Dasboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
+                        <a class="nav-link" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link devLink" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
+                        <a class="nav-link" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
                     </li>
                 </ul>
                 <div class="d-flex">

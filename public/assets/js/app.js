@@ -1,4 +1,23 @@
 console.log("corriendo script App");
+
+$(document).ready(function () {
+    const currentPath = window.location.pathname;
+
+    $('.navbar a').each(function () {
+        const $link = $(this);
+        const href = $link.attr('href');
+        if (!href) return;
+
+        const linkPath = new URL(href, window.location.origin).pathname;
+
+        if (currentPath.startsWith(linkPath)) {
+            $link.addClass('active').removeClass('devLink');
+        } else {
+            $link.removeClass('active').addClass('devLink');
+        }
+    });
+});
+
 hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
 
 function getCode(input) {
