@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/../../core/Controller.php';
-require_once __DIR__ . '/ApiController.php';
+namespace App\Controllers;
+
+use App\Core\Controller;
+use App\Controllers\ApiController;
+
 
 class HomeController extends Controller
 {
@@ -9,23 +12,21 @@ class HomeController extends Controller
     private $apiController;
     private $msg;
 
-    public function __construct()
-    {
+    public function __construct(){
         $conf = configApp();
         $this->tokenLink = $conf['tokenLink'];
 
         $this->apiController = new ApiController();
-        $this->msg= $this->apiController->messageGuest();
-
+        $this->msg = $this->apiController->messageGuest();
     }
 
     public function index(){
         $this->view('home', [
             'title' => 'Devsllanten',
-            'textInfo'=> $this->msg['msgGuest'],
-            'tokenLink'=> $this->tokenLink,
+            'textInfo' => $this->msg['msgGuest'],
+            'tokenLink' => $this->tokenLink,
             'css' => ['/assets/css/home.css'],
-            'js'  => ['/assets/js/app.js','/assets/js/home.js'],
+            'js'  => ['/assets/js/app.js', '/assets/js/home.js'],
             'components' => [
                 'head' => [
                     'file' => 'header'

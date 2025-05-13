@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Core;
+
 class Controller
 {
     /**
@@ -44,8 +47,12 @@ class Controller
     }
 
     public function model($model){
-        require_once __DIR__ . '/../app/models/' . $model . '.php';
-        return new $model;
+        $modelName = 'App\\Models\\' . $model;
+        if (!class_exists($modelName)) {
+            throw new \RuntimeException("Model not found: $modelName");
+        }
+
+        return new $modelName();
     }
 
     public function dataView($data=[], array $assets = []){

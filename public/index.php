@@ -1,14 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../helpers/functions.php';
-spl_autoload_register(function ($class) {
-    foreach (['core', 'app/controllers', 'app/models'] as $folder) {
-        $file = __DIR__ . '/../' . $folder . '/' . $class . '.php';
-        if (file_exists($file)) {
-            require_once $file;
-            return;
-        }
-    }
-});
+// Cargar autoloader de Composer
+require __DIR__ . '/../vendor/autoload.php';
 
-new App();
+// Cargar funciones helpers globales
+require_once __DIR__ . '/../helpers/functions.php';
+
+// Obtener URI
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Manejar la ruta
+App\Core\Router::route($uri);

@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../core/Model.php';
+namespace App\Models;
+
+use App\Core\Model;
+use PDO;
 
 class varModel extends Model
 {
