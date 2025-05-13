@@ -56,10 +56,14 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEndpointLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEndpointLabel">Nuevo Endpoint</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="newNombre" placeholder="Nombre Example">
+                        <label for="newNombre">Nombre</label>
+                    </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="newDescription" placeholder="Description Example">
                         <label for="newDescription">Descripcion</label>
@@ -82,7 +86,7 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditMessageLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -112,10 +116,14 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditEndpointLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditEndpointLabel">Editar Endpoint</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editNombre" placeholder="Nombre Example">
+                        <label for="editNombre">Nombre</label>
+                    </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="editDescription" placeholder="Description Example">
                         <label for="editDescription">Descripcion</label>
@@ -259,8 +267,7 @@
                     </tr>
                     <tr>
                         <th scope="row">7</th>
-                        <td>La suscripcion esta pronto a finalizar,para renovarla ingresa a la pestaña Suscripcion
-                            .</td>
+                        <td>La suscripcion esta pronto a finalizar,para renovarla ingresa a la pestaña Suscripcion.</td>
                         <td><span class="badge bg-primary">Suscripcion</span></td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
@@ -290,6 +297,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
                         <th scope="col">Url</th>
                         <th scope="col">Opcion</th>
@@ -298,6 +306,7 @@
                 <tbody class="text-white">
                     <tr>
                         <th scope="row">1</th>
+                        <td>validateCode</td>
                         <td>Obtiene la list Dark</td>
                         <td class="text-break">http://devsllanten.com/api/validateCode</td>
                         <td>
@@ -308,6 +317,7 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
+                        <td>createSubs</td>
                         <td>Genera la Suscripcion</td>
                         <td class="text-break">http://devsllanten.com/api/createSubs</td>
                         <td>
@@ -319,6 +329,7 @@
                     <tr>
                     <tr>
                         <th scope="row">3</th>
+                        <td>getSubs</td>
                         <td>Optiene las Suscripciones</td>
                         <td class="text-break">http://devsllanten.com/api/getSubs</td>
                         <td>
@@ -329,6 +340,7 @@
                     </tr>
                     <tr>
                         <th scope="row">4</th>
+                        <td>validateLogin</td>
                         <td>Valida el ingreso al Dasboard</td>
                         <td class="text-break">http://devsllanten.com/api/validateLogin</td>
                         <td>
@@ -339,6 +351,7 @@
                     </tr>
                     <tr>
                         <th scope="row">5</th>
+                        <td>message</td>
                         <td>Obtiene todos los Mensajes</td>
                         <td class="text-break">http://devsllanten.com/api/message</td>
                         <td>
@@ -349,6 +362,7 @@
                     </tr>
                     <tr>
                         <th scope="row">6</th>
+                        <td>messageGuest</td>
                         <td>Obtiene Mensajes del sistema para usuarios guest</td>
                         <td class="text-break">http://devsllanten.com/api/messageGuest</td>
                         <td>
@@ -359,6 +373,7 @@
                     </tr>
                     <tr>
                         <th scope="row">7</th>
+                        <td>getEndpoint</td>
                         <td>Obtiene los EndPoint</td>
                         <td class="text-break">http://devsllanten.com/api/getEndpoint</td>
                         <td>

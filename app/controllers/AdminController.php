@@ -32,7 +32,7 @@ class AdminController extends Controller
                     'file' => 'header'
                 ],
                 'nav' => [
-                    'file' => 'navbar'
+                    'file' => 'navbarAdmin'
                 ]              
             ]
         ]);
@@ -49,7 +49,7 @@ class AdminController extends Controller
                     'file' => 'header'
                 ],
                 'nav' => [
-                    'file' => 'navbar'
+                    'file' => 'navbarAdmin'
                 ]
             ]
         ]);
@@ -66,7 +66,7 @@ class AdminController extends Controller
                     'file' => 'header'
                 ],
                 'nav' => [
-                    'file' => 'navbar'
+                    'file' => 'navbarAdmin'
                 ]
             ]
         ]);        

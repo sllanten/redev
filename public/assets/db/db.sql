@@ -36,7 +36,7 @@ CREATE TABLE mensajes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     mensaje TEXT NOT NULL,
-    tipo INT(2),
+    tipo TEXT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
@@ -44,6 +44,7 @@ CREATE TABLE mensajes (
 CREATE TABLE api (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(25) NOT NULL,
+    descripcion TEXT NOT NULL,
     url VARCHAR(255) NOT NULL,
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
@@ -58,4 +59,11 @@ CREATE TABLE validacion (
     fecha DATE,
     estado INT(2),
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+);
+
+-- Crear tabla 'variables'
+CREATE TABLE variables(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(25) NOT NULL,
+    token VARCHAR(255) NOT NULL
 );

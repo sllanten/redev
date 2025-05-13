@@ -74,5 +74,10 @@ class ApiController extends Controller
         }
     }
 
+    public function messageGuest(){
+        $msgModel = $this->model('msgModel');
+        return $msgModel->getMsgGuest();
+    }
+
 
 }

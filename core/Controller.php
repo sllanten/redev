@@ -58,14 +58,15 @@ class Controller
     }
 
     protected function config(){
-        $conf = configApp();
-        return $conf['urlBase'];
+        $varModel = $this->model('varModel');
+        return $varModel->getVar();
     }
 
     protected function guardMidware(){
         session_start();
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header('Location: '. $this->config());
+            $config= $this->config();
+            header('Location: '.$config[0]['token']);
             exit();
         }
     }
@@ -77,9 +78,10 @@ class Controller
     }
 
     protected function validateMidware(){
-        $url= $this->config()."/admin/adminConf";
         session_start();
         if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == true) {
+            $config = $this->config();
+            $url= $config[0]['token']."admin/dasboard";
             header('Location: ' . $url);
         }
     }

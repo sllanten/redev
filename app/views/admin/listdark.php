@@ -57,7 +57,7 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditRedLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditRedLabel">Editar Red</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -69,6 +69,7 @@
                         <input type="password" class="form-control" id="newPass" placeholder="Red Example">
                         <label for="newPass">Contraseña</label>
                     </div>
+                    <br>
                     <div class="form-floating">
                         <input type="text" class="form-control" id="newPass" placeholder="Red Example" disabled readonly>
                         <label for="newPass">Fecha de registro</label>

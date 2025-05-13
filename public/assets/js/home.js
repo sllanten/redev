@@ -1,4 +1,5 @@
 console.log("corriendo script Home");
+console.log("Token:", window.AppData.tokenLink);
 
 let datos = [];
 let filtrados = [];
