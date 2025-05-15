@@ -6,7 +6,9 @@ use App\Core\Controller;
 class ApiController extends Controller
 {
 
-    public function getStatus($code){
+    public function getStatus($code = null){
+        $this->controllerMidware($code);
+
         $userModel = $this->model('UserModel');
         $codigos =  $userModel->getCode();
 
@@ -16,7 +18,9 @@ class ApiController extends Controller
         return $status;
     }
 
-    public function getIdUser($code){
+    public function getIdUser($code = null){
+        $this->controllerMidware($code);
+
         $infoModel = $this->model('InfoModel');
         $rows = $infoModel->getId($code);
         return (int)$rows['id'];
