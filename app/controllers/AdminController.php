@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/../../core/Controller.php';
-require_once __DIR__ . '/ApiController.php';
+
+namespace App\Controllers;
+
+use App\Core\Controller;
+
 class AdminController extends Controller
 {
     
@@ -26,7 +29,15 @@ class AdminController extends Controller
         $this->view('admin.dasboard', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
+                'nav' => [
+                    'file' => 'navbarAdmin'
+                ]              
+            ]
         ]);
     }
 
@@ -35,7 +46,15 @@ class AdminController extends Controller
         $this->view('admin.configuracion', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
+                'nav' => [
+                    'file' => 'navbarAdmin'
+                ]
+            ]
         ]);
     }
 
@@ -44,7 +63,27 @@ class AdminController extends Controller
         $this->view('admin.listdark', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js']
+            'js' => ['/assets/js/app.js'],
+            'components' => [
+                'head' => [
+                    'file' => 'header'
+                ],
+                'nav' => [
+                    'file' => 'navbarAdmin'
+                ]
+            ]
         ]);        
+    }
+
+    public function messageSerch($id){
+        $msgModel = $this->model('MsgModel');
+        $json = json_encode($msgModel->getMsgOnly((int)$id));
+        $response = json_decode($json);
+        return $response->message;
+    }
+    
+    public function getEndpoint(){
+        $msgModel = $this->model('ApiModel');
+        return $msgModel->getEndPoint();
     }
 }

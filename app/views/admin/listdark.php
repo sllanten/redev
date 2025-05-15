@@ -4,18 +4,9 @@
 <head>
     <title><?= $data['title']; ?></title>
     <link rel="icon" type="image/png" href="https://images.icon-icons.com/4242/PNG/512/bnb_crypto_icon_264371.png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Componente-->
+    <?= $component['head'] ?? '' ?>
 
     <?php if (!empty($data['css'])): ?>
         <?php foreach ($data['css'] as $style): ?>
@@ -26,36 +17,9 @@
 </head>
 
 <body class="bg-dark text-white">
-    <br>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a href="#" class="text-decoration-none navbar-brand"">
-                <i class=" bi bi-code-square me-1"></i> Devsllanten
-            </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link devLink" href="http://devsllanten.com/admin/dasboard">Dasboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-outline-warning text-white" id="btnExit" type="button" onclick="salir()">Log out</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Componente-->
+    <?= $component['nav'] ?? '' ?>
 
     <!--ModalRed-->
     <div class="modal fade" id="modalRed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
@@ -93,7 +57,7 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditRedLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditRedLabel">Editar Red</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -105,6 +69,7 @@
                         <input type="password" class="form-control" id="newPass" placeholder="Red Example">
                         <label for="newPass">Contraseña</label>
                     </div>
+                    <br>
                     <div class="form-floating">
                         <input type="text" class="form-control" id="newPass" placeholder="Red Example" disabled readonly>
                         <label for="newPass">Fecha de registro</label>

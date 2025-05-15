@@ -21,8 +21,6 @@ function mypass_check($value, $hashed){
 
 function configApp(){
    return $data= [
-        "tokenApi" => "951321Dev",
-        "tokenAcceso" => "-20223528",
         "tokenLink"=> "javascript:void(0);",
         "urlBase" => "http://devsllanten.com/"
     ];

@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../core/Controller.php';
+
+namespace App\Controllers;
+
+use App\Core\Controller;
 class ApiController extends Controller
 {
 
@@ -20,7 +23,8 @@ class ApiController extends Controller
     }    
 
     public function validateCode(){
-        header("Content-Type: application/json");
+        $this->guardApiMidware();
+
         $input = file_get_contents("php://input");
         $data = json_decode($input, true);
         $code = $data['code'];
@@ -50,12 +54,7 @@ class ApiController extends Controller
     }
 
     public function validateLogin(){
-        header('Content-Type: application/json');
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            echo json_encode(['success' => false, 'message' => 'Metodo no permitido']);
-            return;
-        }
+        $this->guardApiMidware();
 
         $data = json_decode(file_get_contents('php://input'), true);
         $code = $data['code'] ?? '';
@@ -74,5 +73,36 @@ class ApiController extends Controller
         }
     }
 
+    public function getMessage(){
+        $this->guardApiMidware();
 
+        $msgModel = $this->model('MsgModel');
+        echo json_encode($msgModel->getMsg());
+    }
+
+    public function messageSerch(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        $id = $data['codeMessage'];
+
+        $msgModel = $this->model('MsgModel');
+        $json = json_encode($msgModel->getMsgOnly($id));
+        $data = json_decode($json);
+
+        if($data->message === null){
+            $response = [
+                'status'    => 404,
+                'message' => 'mensaje no encontrado en el APi.',
+            ];
+            echo json_encode($response, true);
+        }else{
+            $response = [
+                'status'    => 200,
+                'message' => $data->message,
+            ];
+            echo json_encode($response,true);
+        }
+    }
 }

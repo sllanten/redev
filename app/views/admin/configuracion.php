@@ -4,18 +4,9 @@
 <head>
     <title><?= $data['title']; ?></title>
     <link rel="icon" type="image/png" href="https://images.icon-icons.com/4242/PNG/512/bnb_crypto_icon_264371.png">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Componente-->
+    <?= $component['head'] ?? '' ?>
 
     <?php if (!empty($data['css'])): ?>
         <?php foreach ($data['css'] as $style): ?>
@@ -26,36 +17,9 @@
 </head>
 
 <body class="bg-dark text-white">
-    <br>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a href="#" class="text-decoration-none navbar-brand"">
-                <i class=" bi bi-code-square me-1"></i> Devsllanten
-            </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link devLink" href="http://devsllanten.com/admin/dasboard">Dasboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link devLink" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link devLink" href="http://devsllanten.com/admin/adminListDark">List Dark</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-outline-warning text-white" id="btnExit" type="button" onclick="salir()">Log out</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Componente-->
+    <?= $component['nav'] ?? '' ?>
 
     <!--ModalMessages-->
     <div class="modal fade" id="modalMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
@@ -92,10 +56,14 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEndpointLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEndpointLabel">Nuevo Endpoint</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="newNombre" placeholder="Nombre Example">
+                        <label for="newNombre">Nombre</label>
+                    </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="newDescription" placeholder="Description Example">
                         <label for="newDescription">Descripcion</label>
@@ -118,7 +86,7 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditMessageLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -148,10 +116,14 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditEndpointLabel">Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditEndpointLabel">Editar Endpoint</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="editNombre" placeholder="Nombre Example">
+                        <label for="editNombre">Nombre</label>
+                    </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="editDescription" placeholder="Description Example">
                         <label for="editDescription">Descripcion</label>
@@ -295,8 +267,7 @@
                     </tr>
                     <tr>
                         <th scope="row">7</th>
-                        <td>La suscripcion esta pronto a finalizar,para renovarla ingresa a la pestaña Suscripcion
-                            .</td>
+                        <td>La suscripcion esta pronto a finalizar,para renovarla ingresa a la pestaña Suscripcion.</td>
                         <td><span class="badge bg-primary">Suscripcion</span></td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
@@ -326,6 +297,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Descripcion</th>
                         <th scope="col">Url</th>
                         <th scope="col">Opcion</th>
@@ -334,6 +306,7 @@
                 <tbody class="text-white">
                     <tr>
                         <th scope="row">1</th>
+                        <td>validateCode</td>
                         <td>Obtiene la list Dark</td>
                         <td class="text-break">http://devsllanten.com/api/validateCode</td>
                         <td>
@@ -344,6 +317,7 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
+                        <td>createSubs</td>
                         <td>Genera la Suscripcion</td>
                         <td class="text-break">http://devsllanten.com/api/createSubs</td>
                         <td>
@@ -355,6 +329,7 @@
                     <tr>
                     <tr>
                         <th scope="row">3</th>
+                        <td>getSubs</td>
                         <td>Optiene las Suscripciones</td>
                         <td class="text-break">http://devsllanten.com/api/getSubs</td>
                         <td>
@@ -365,6 +340,7 @@
                     </tr>
                     <tr>
                         <th scope="row">4</th>
+                        <td>validateLogin</td>
                         <td>Valida el ingreso al Dasboard</td>
                         <td class="text-break">http://devsllanten.com/api/validateLogin</td>
                         <td>
@@ -375,8 +351,9 @@
                     </tr>
                     <tr>
                         <th scope="row">5</th>
+                        <td>getMessage</td>
                         <td>Obtiene todos los Mensajes</td>
-                        <td class="text-break">http://devsllanten.com/api/message</td>
+                        <td class="text-break">http://devsllanten.com/api/getMessage</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
                             &nbsp
@@ -385,16 +362,7 @@
                     </tr>
                     <tr>
                         <th scope="row">6</th>
-                        <td>Obtiene Mensajes del sistema para usuarios guest</td>
-                        <td class="text-break">http://devsllanten.com/api/messageGuest</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
+                        <td>getEndpoint</td>
                         <td>Obtiene los EndPoint</td>
                         <td class="text-break">http://devsllanten.com/api/getEndpoint</td>
                         <td>

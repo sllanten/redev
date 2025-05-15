@@ -1,6 +1,8 @@
 <?php
-require_once 'Router.php';
+namespace App\Core;
 
+use App\Core\Router;
+use Throwable;
 class App
 {
     public function __construct()

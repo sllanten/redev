@@ -1,0 +1,21 @@
+{
+    "name": "devsllanten/devsllanten",
+    "description": "es un sistema de información de nueva generación, enfocado en la gestión centralizada de Access Points mediante un modelo de suscripción escalable y seguro",
+    "authors": [
+        {
+            "name": "sllanten",
+            "email": "dev.sllanten@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\Core\\": "core/",
+            "App\\Controllers\\": "app/controllers/",
+            "App\\Models\\": "app/models/"
+        },
+        "files": [
+            "helpers/functions.php"
+        ]
+    }
+}
