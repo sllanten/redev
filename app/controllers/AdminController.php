@@ -74,4 +74,16 @@ class AdminController extends Controller
             ]
         ]);        
     }
+
+    public function messageSerch($id){
+        $msgModel = $this->model('MsgModel');
+        $json = json_encode($msgModel->getMsgOnly((int)$id));
+        $response = json_decode($json);
+        return $response->message;
+    }
+    
+    public function getEndpoint(){
+        $msgModel = $this->model('ApiModel');
+        return $msgModel->getEndPoint();
+    }
 }

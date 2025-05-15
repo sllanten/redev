@@ -8,15 +8,6 @@
     <!-- Componente-->
     <?= $component['head'] ?? '' ?>
 
-    <script>
-        window.AppData =
-            <?php
-            echo json_encode([
-                'tokenLink'   => $tokenLink
-            ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-            ?>;
-    </script>
-
 </head>
 
 <body class="bg-dark text-white">

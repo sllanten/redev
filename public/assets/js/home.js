@@ -1,5 +1,5 @@
 console.log("corriendo script Home");
-console.log("Token:", window.AppData.tokenLink);
+console.log("Api validateCode Nueva manera: ", window.AppData.validateCode);
 
 let datos = [];
 let filtrados = [];
@@ -28,7 +28,7 @@ async function sendCode() {
     if (codeValue == "") return;
 
     try {
-        const response = await fetch('http://devsllanten.com/api/validateCode', {
+        const response = await fetch(window.AppData.validateCode, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ async function sendCode() {
         const jsonData = await response.json();
         validateResp(jsonData['status'], jsonData['textInfo'])
         if (jsonData['info'] === 403) return;
-        if (jsonData['info'].length === 0) viewToas("No tienes activa una suscripcion.");
+        if (jsonData['info'].length === 0) msgToast(5);
         datos = jsonData['info'];
         filtrados = [...datos];
         pagina = 1;
@@ -94,7 +94,6 @@ function exitApp(){
     $('#cod').attr('disabled', false);
     $('#btnSend').attr('disabled', false); 
 
-    viewToas("Has finalizado la sección");
 }
 
 function test(e) {

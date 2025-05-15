@@ -351,9 +351,9 @@
                     </tr>
                     <tr>
                         <th scope="row">5</th>
-                        <td>message</td>
+                        <td>getMessage</td>
                         <td>Obtiene todos los Mensajes</td>
-                        <td class="text-break">http://devsllanten.com/api/message</td>
+                        <td class="text-break">http://devsllanten.com/api/getMessage</td>
                         <td>
                             <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
                             &nbsp
@@ -362,17 +362,6 @@
                     </tr>
                     <tr>
                         <th scope="row">6</th>
-                        <td>messageGuest</td>
-                        <td>Obtiene Mensajes del sistema para usuarios guest</td>
-                        <td class="text-break">http://devsllanten.com/api/messageGuest</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
                         <td>getEndpoint</td>
                         <td>Obtiene los EndPoint</td>
                         <td class="text-break">http://devsllanten.com/api/getEndpoint</td>

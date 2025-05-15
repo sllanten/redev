@@ -2,7 +2,6 @@ console.log("corriendo script App");
 
 $(document).ready(function () {
     const currentPath = window.location.pathname;
-
     $('.navbar a').each(function () {
         const $link = $(this);
         const href = $link.attr('href');
@@ -31,6 +30,28 @@ function viewToas(message) {
     var toastEl = document.getElementById('infoToast');
     var toast = new bootstrap.Toast(toastEl);
     toast.show();
+}
+
+async function msgToast(id){
+    try {
+        const response = await fetch('http://devsllanten.com/api/messageSerch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ codeMessage: parseInt(id) })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const data = await response.json();
+        data['status'] === 200 ? viewToas(data['message']) : viewToas(data['message']);
+
+    } catch (error) {
+        console.error('Ocurrió un error #2:', error);
+    }
 }
 
 async function salir() {

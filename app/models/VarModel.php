@@ -4,7 +4,7 @@ namespace App\Models;
 use App\Core\Model;
 use PDO;
 
-class varModel extends Model
+class VarModel extends Model
 {
     public function getVar(): array
     {

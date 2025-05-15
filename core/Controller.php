@@ -65,8 +65,14 @@ class Controller
     }
 
     protected function config(){
-        $varModel = $this->model('varModel');
+        $varModel = $this->model('VarModel');
         return $varModel->getVar();
+    }
+
+    protected function exitApp(){
+        session_start();
+        session_unset();
+        session_destroy();
     }
 
     protected function guardMidware(){
@@ -78,18 +84,20 @@ class Controller
         }
     }
 
-    protected function exitApp(){
-        session_start();
-        session_unset();     
-        session_destroy();
-    }
-
     protected function validateMidware(){
         session_start();
         if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == true) {
             $config = $this->config();
             $url= $config[0]['token']."admin/dasboard";
             header('Location: ' . $url);
+        }
+    }
+
+    protected function guardApiMidware(){
+        header("Content-Type: application/json");
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 403, 'message' => 'Acceso denegado']);
+            exit;
         }
     }
 }
