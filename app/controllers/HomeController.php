@@ -5,16 +5,13 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Controllers\AdminController;
 
-
 class HomeController extends Controller
 {
 
-    private $tokenLink;
     private $adminController;
 
-    public function __construct(){
-        $conf = configApp();
-        $this->tokenLink = $conf['tokenLink'];
+    public function __construct()
+    {
         $this->adminController = new AdminController();
     }
 
@@ -22,14 +19,14 @@ class HomeController extends Controller
         $this->view('home', [
             'title' => 'Devsllanten',
             'textInfo' => $this->adminController->messageSerch(1),
-            'tokenLink' => $this->tokenLink,
+            'tokenLink' =>  $this->config('tokenLink'),
             'css' => ['/assets/css/home.css'],
             'js'  => ['/assets/js/app.js', '/assets/js/home.js'],
             'components' => [
                 'head' => [
                     'file' => 'header',
                     'data' => [
-                        'endpoints' => $this->adminController->getEndpoint()
+                        'endpoints' => $this->adminController->getEndpoint('admin')
                     ]
                 ],
                 'nav' => [

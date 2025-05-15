@@ -64,9 +64,10 @@ class Controller
         $scripts = $assets['js']  ?? [];
     }
 
-    protected function config(){
+    protected function config($var){
         $varModel = $this->model('VarModel');
-        return $varModel->getVar();
+        $resonsive= $varModel->getVar($var);
+        return $resonsive['token'];
     }
 
     protected function exitApp(){
@@ -78,8 +79,7 @@ class Controller
     protected function guardMidware(){
         session_start();
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $config= $this->config();
-            header('Location: '.$config[0]['token']);
+            header('Location: '. $this->config('urlBase'));
             exit();
         }
     }
@@ -87,8 +87,7 @@ class Controller
     protected function validateMidware(){
         session_start();
         if (isset($_SESSION['logged_in']) || $_SESSION['logged_in'] == true) {
-            $config = $this->config();
-            $url= $config[0]['token']."admin/dasboard";
+             $url=  $this->config('urlBase')."admin/dasboard";
             header('Location: ' . $url);
         }
     }
@@ -98,6 +97,13 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode(['status' => 403, 'message' => 'Acceso denegado']);
             exit;
+        }
+    }
+
+    protected function controllerMidware($code){
+        if ($code === null) {
+            header('Location: ' . $this->config('urlBase'));
+            exit();
         }
     }
 }

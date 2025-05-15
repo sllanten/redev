@@ -6,25 +6,6 @@ use PDO;
 
 class UserModel extends Model
 {
-    public function getAllUser(): array{
-        $stmt = $this->db->prepare("SELECT * FROM usuario WHERE rol = 2");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getCode(): array{
-        $stmt = $this->db->prepare("SELECT codigo FROM usuario");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getOnlyUser(int $id): ?array{
-        $stmt = $this->db->prepare("SELECT * FROM usuario WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ?: null;
-    }    
-
     public function saveDataUser(array $data): bool{
         $stmt = $this->db->prepare("INSERT INTO usuario (nombre, codigo, rol) VALUES (:nombre, :codigo, :rol)");
         return $stmt->execute([
