@@ -6,6 +6,25 @@ use PDO;
 
 class UserModel extends Model
 {
+
+    public function getAllUser(){
+        $stmt = $this->db->prepare("
+        SELECT 
+            u.id,
+            u.nombre,
+            u.codigo,
+            COUNT(s.id_usuario) AS suscripcion
+        FROM 
+            usuario u
+        LEFT JOIN 
+            suscripcion s ON u.id = s.id_usuario
+        GROUP BY 
+            u.id, u.nombre, u.codigo;
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);        
+    }
+
     public function saveDataUser(array $data): bool{
         $stmt = $this->db->prepare("INSERT INTO usuario (nombre, codigo, rol) VALUES (:nombre, :codigo, :rol)");
         return $stmt->execute([

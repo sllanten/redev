@@ -382,12 +382,11 @@
         </div>
     </div>
 
+    <?php if (!empty($data['js'])): ?>
+        <?php foreach ($data['js'] as $js): ?>
+            <script src="<?= $js ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
 </body>
-
-<?php if (!empty($data['js'])): ?>
-    <?php foreach ($data['js'] as $js): ?>
-        <script src="<?= $js ?>"></script>
-    <?php endforeach; ?>
-<?php endif; ?>
-
 </html>

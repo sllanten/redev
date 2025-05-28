@@ -12,7 +12,8 @@ class InfoModel extends Model
             i.id,
             i.red,
             i.pass,
-            s.fecha
+            s.fecha,
+            u.id as idUser
         FROM 
             suscripcion s
         INNER JOIN 
@@ -37,5 +38,11 @@ class InfoModel extends Model
             ];
         }
 
+    }
+
+    public function getAllRedes(){
+        $stmt = $this->db->prepare("SELECT id, red FROM info");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }    
 }

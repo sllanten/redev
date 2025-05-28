@@ -22,8 +22,7 @@ class MsgModel extends Model
         return $formatted;
     }
 
-    public function getMsgOnly(int $id): array
-    {
+    public function getMsgOnly(int $id): array{
         $stmt = $this->db->prepare("SELECT mensaje as message FROM mensajes WHERE id= :id");
         $stmt->execute([':id' => $id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

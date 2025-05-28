@@ -4,7 +4,7 @@
 <head>
     <title><?= $data['title']; ?></title>
     <link rel="icon" type="image/png" href="https://images.icon-icons.com/4242/PNG/512/bnb_crypto_icon_264371.png">
-    
+
     <!-- Componente-->
     <?= $component['head'] ?? '' ?>
 
@@ -37,8 +37,8 @@
             <div class="col d-flex align-items-start">
                 <div>
                     <h2>Access Node</h2>
-                    <p>Permite administrar clientes del sistema, generar sus accesos, editar o eliminar registros, así como asignar, cancelar o dar de baja las suscripciones ademas de actualizar las fecha de suscripcion entre otras opciones </p>
-                    <a href="#" class="btn btn-primary">
+                    <p>Permite administrar clientes del sistema, generar sus accesos, editar o eliminar registros, así como asignar, cancelar o dar de baja las suscripciones ademas de actualizar las fecha de suscripcion entre otras opciones.</p>
+                    <a href="http://devsllanten.com/admin/adminAcces" class="btn btn-primary">
                         Ir a Access Node
                     </a>
                 </div>
@@ -71,12 +71,12 @@
         </div>
     </div>
 
+    <?php if (!empty($data['js'])): ?>
+        <?php foreach ($data['js'] as $js): ?>
+            <script src="<?= $js ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    
 </body>
-
-<?php if (!empty($data['js'])): ?>
-    <?php foreach ($data['js'] as $js): ?>
-        <script src="<?= $js ?>"></script>
-    <?php endforeach; ?>
-<?php endif; ?>
 
 </html>

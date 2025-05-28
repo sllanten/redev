@@ -86,4 +86,28 @@ class ApiController extends Controller
             echo json_encode($response,true);
         }
     }
+
+    public function getUser(){
+        $this->guardApiMidware();
+
+        $msgModel = $this->model('UserModel');
+        echo json_encode($msgModel->getAllUser());
+    }
+
+    public function getSubs(){
+        $this->guardApiMidware();
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $code = $data['code'] ?? '';
+
+        $msgModel = $this->model('InfoModel');
+        echo json_encode($msgModel->getSuscription($code));
+    }
+
+    public function getLIst(){
+        $this->guardApiMidware();
+
+        $msgModel = $this->model('InfoModel');
+        echo json_encode($msgModel->getAllRedes());
+    }
 }
