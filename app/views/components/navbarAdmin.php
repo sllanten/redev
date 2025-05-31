@@ -1,3 +1,20 @@
+    <?php
+    $indexed = [];
+    foreach ($endpoints as $row) {
+        $indexed[$row['id']] = $row;
+    }
+    $appData = [
+        'getCliente' => $indexed[8]['url'],
+        'getSubs' => $indexed[3]['url'],
+        'getLisDark' => $indexed[9]['url'],
+        'deleteLisDark' => $indexed[10]['url'],
+        'createLisDark' => $indexed[11]['url'],
+        'updateLisDark' => $indexed[12]['url']
+    ];
+    ?>
+    <script>
+        window.AppData = <?= json_encode($appData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+    </script>
     <br>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -16,7 +33,7 @@
                         <a class="nav-link" href="http://devsllanten.com/admin/dasboard">Dasboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $data['tokenLink']; ?>" id="acc" onclick="">Acces Node</a>
+                        <a class="nav-link" href="http://devsllanten.com/admin/adminAcces">Acces Node</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="http://devsllanten.com/admin/adminListDark">List Dark</a>

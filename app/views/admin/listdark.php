@@ -40,13 +40,13 @@
                     </div>
                     <br>
                     <div class="form-floating">
-                        <input type="text" value="2025-07-05" class="form-control" id="newPass" placeholder="Red Example" disabled readonly>
-                        <label for="newPass">Fecha de registro</label>
+                        <input type="text" value="" class="form-control" id="newFecha" placeholder="Red Example" disabled readonly>
+                        <label for="newFecha">Fecha de registro</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="validateCreate();">Guardar</button>
                 </div>
             </div>
         </div>
@@ -62,22 +62,22 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newName" placeholder="Red Example">
-                        <label for="newName">Red</label>
+                        <input type="text" class="form-control" id="EditName" placeholder="Red Example">
+                        <label for="EditName">Red</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="newPass" placeholder="Red Example">
-                        <label for="newPass">Contraseña</label>
+                        <input type="text" class="form-control" id="EditPass" placeholder="Red Example">
+                        <label for="EditPass">Contraseña</label>
                     </div>
                     <br>
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="newPass" placeholder="Red Example" disabled readonly>
-                        <label for="newPass">Fecha de registro</label>
+                        <input type="text" class="form-control" id="EditFecha" placeholder="Red Example" disabled readonly>
+                        <label for="EditFecha">Fecha de registro</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelarUpdate();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validateUpdate();">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -95,8 +95,8 @@
                     <h3>Seguro de eliminar</h3>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelarDelete();">Cancelar</button>
+                    <button type="button" onclick="deleteRed();" class="btn btn-primary">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -130,12 +130,12 @@
 
         <h2 class="pb-2 py-4">Red</h2>
         <div class="form-floating mb-3 text-black">
-            <input type="search" class="form-control" id="searchMessage" placeholder="SearchMessage Example">
-            <label for="searchMessage">Buscar Red</label>
+            <input type="search" class="form-control" id="filtroNombre" placeholder="filtroNombre Example">
+            <label for="filtroNombre">Buscar Red</label>
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nueva Red" data-bs-toggle="modal" data-bs-target="#modalRed">
+        <input type="button" class="text-end btn btn-secondary" value="Nueva Red" onclick="loadFecha('newFecha');" data-bs-toggle="modal" data-bs-target="#modalRed">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>
@@ -148,72 +148,24 @@
                         <th scope="col">Opcion</th>
                     </tr>
                 </thead>
-                <tbody class="text-white">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>redAdmin</td>
-                        <td>test</td>
-                        <td>2025-05-04</td>
-                        <td>2025-07-04</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditRed">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>redAdmin2</td>
-                        <td>test</td>
-                        <td>2025-05-04</td>
-                        <td>2025-05-04</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditRed">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>redGuest</td>
-                        <td>test3</td>
-                        <td>2025-05-04</td>
-                        <td>2025-05-04</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditRed">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>redGUest2</td>
-                        <td>test4</td>
-                        <td>2025-05-04</td>
-                        <td>2025-05-04</td>
-                        <td colspan="2">
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditRed">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
+                <tbody id="tablaDatos" class="text-white">
+
                 </tbody>
             </table>
             <!-- Paginación -->
             <div class="d-flex justify-content-between align-items-center">
-                <button id="anterior" class="btn btn-primary">Anterior</button>
+                <button id="btnTableAnt" class="btn btn-primary">Anterior</button>
                 <span>Página <span id="paginaActual">1</span></span>
-                <button id="siguiente" class="btn btn-primary">Siguiente</button>
+                <button id="btnTableSig" class="btn btn-primary">Siguiente</button>
             </div>
         </div>
     </div>
 
+    <?php if (!empty($data['js'])): ?>
+        <?php foreach ($data['js'] as $js): ?>
+            <script src="<?= $js ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </body>
-
-<?php if (!empty($data['js'])): ?>
-    <?php foreach ($data['js'] as $js): ?>
-        <script src="<?= $js ?>"></script>
-    <?php endforeach; ?>
-<?php endif; ?>
 
 </html>
