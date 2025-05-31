@@ -28,20 +28,12 @@ function configApp(){
 
 function getYear(){
     $mes = date("m");
-    $año = date("Y"); 
-    $meses= [
-        1=> "Enero",
-        2=> "Febrero",
-        3=> "Marzo",
-        4=> "Abril",
-        5=> "Mayo",
-        6=> "Junio",
-        7=> "Julio",
-        8=> "Agosto",
-        9=> "Septiembre",
-        10=> "Octubre",
-        11=> "Noviembre",
-        12=> "Diciembre",
-    ];
-     return $message= $meses[(int)$mes]." - ".(int)$año;
+    $año = date("Y");
+    $dia = date("d");
+    return $año."-".$mes."-".$dia;
+}
+
+function getUserSeccion(){
+    session_start();
+    return (int)$_SESSION['user_id'];
 }

@@ -6,7 +6,10 @@
     $appData = [
         'getCliente' => $indexed[8]['url'],
         'getSubs' => $indexed[3]['url'],
-        'getLisDark' => $indexed[9]['url']
+        'getLisDark' => $indexed[9]['url'],
+        'deleteLisDark' => $indexed[10]['url'],
+        'createLisDark' => $indexed[11]['url'],
+        'updateLisDark' => $indexed[12]['url']
     ];
     ?>
     <script>

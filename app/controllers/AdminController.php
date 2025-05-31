@@ -63,10 +63,13 @@ class AdminController extends Controller
         $this->view('admin.listdark', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js'],
+            'js' => ['/assets/js/app.js', '/assets/js/red.js'],
             'components' => [
                 'head' => [
-                    'file' => 'header'
+                    'file' => 'header',
+                    'data' => [
+                        'endpoints' => $this->getEndpoint('admin')
+                    ]
                 ],
                 'nav' => [
                     'file' => 'navbarAdmin'
@@ -85,7 +88,7 @@ class AdminController extends Controller
                 'head' => [
                     'file' => 'header',
                     'data' => [
-                        'endpoints' => $this->getEndpoint('admin'),
+                        'endpoints' => $this->getEndpoint('admin')
                     ]                    
                 ],
                 'nav' => [

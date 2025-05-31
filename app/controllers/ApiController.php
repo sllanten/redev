@@ -110,4 +110,46 @@ class ApiController extends Controller
         $msgModel = $this->model('InfoModel');
         echo json_encode($msgModel->getAllRedes());
     }
+
+    public function deleteRed(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        $id = $data['code'];
+
+        $infoModel= $this->model(('InfoModel'));
+        echo json_encode($infoModel->deleteRed((int)$id));
+    }
+
+    public function createList(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+        
+        $data['newName']= $request['newName'];
+        $data['newPass']= $request['newPass'];
+        $data['newFecha']= getYear();
+        $data['fechamod']= getYear();
+        $data['id_usuario']= getUserSeccion();
+        
+        $infoModel= $this->model('InfoModel');
+        echo json_encode($infoModel->saveRed($data));
+    }
+
+    public function updateList(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+        
+        $data['idRed']= (int)$request['idRed'];
+        $data['EditName']= $request['EditName'];
+        $data['EditPass']= $request['EditPass'];
+        $data['fechamod']= getYear();
+        
+        $infoModel= $this->model('InfoModel');
+        echo json_encode($infoModel->updateRed($data));
+    }
 }

@@ -54,6 +54,16 @@ async function msgToast(id){
     }
 }
 
+function loadFecha(id) {
+    const fechaActual = new Date();
+
+    const anio = fechaActual.getFullYear();
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+    const dia = String(fechaActual.getDate()).padStart(2, '0');
+
+    document.getElementById(id).value = anio + "-" + mes + "-" + dia;
+}
+
 async function salir() {
     try {
         const response = await fetch('http://devsllanten.com/admin/exitDasboard', {
