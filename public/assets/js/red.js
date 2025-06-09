@@ -9,8 +9,8 @@ let filtradosRed = [];
 let paginaRed = 1;
 const regPagRed = 10;
 
-let idDetele= null;
-let idUpdate= null;
+let idDetele = null;
+let idUpdate = null;
 
 $(document).ready(function () {
     getList();
@@ -49,7 +49,7 @@ const mostrarList = () => {
     const inicio = (paginaRed - 1) * regPagRed;
     const fin = inicio + regPagRed;
     const datosPagina = filtradosRed.slice(inicio, fin);
-    let index=1
+    let index = 1
 
     $('#tablaDatos').empty();
 
@@ -58,12 +58,12 @@ const mostrarList = () => {
             <tr>
                 <th scope="row">${index++}</th>
                 <td>${item.red}</td>
-                <td>${item.pass}</td>
+                <td>${descifrarAES(item.pass)}</td>
                 <td>${item.fechareg}</td>
                 <td>${item.fechamod}</td>
                 <td>
                     <input type="button" class="devBtn btn btn-sm btn-warning text-white" 
-                    onclick="loadModal('${item.id}','${item.red}','${item.pass}','${item.fechareg}');" value="Editar">
+                    onclick="loadModal('${item.id}','${item.red}','${descifrarAES(item.pass)}','${item.fechareg}');" value="Editar">
                     &nbsp
                     <button class="devBtn btn btn-sm btn-danger text-white" 
                     onclick="loadDelete('${item.id}')">Eliminar</button>
@@ -98,9 +98,9 @@ $('#filtroNombre').on('input', () => {
     mostrarList();
 });
 
-function loadModal(id,red,pass,fechareg){
+function loadModal(id, red, pass, fechareg) {
 
-    idUpdate= parseInt(id);
+    idUpdate = parseInt(id);
     document.getElementById("EditName").value = red;
     document.getElementById("EditPass").value = pass;
     document.getElementById("EditFecha").value = fechareg;
@@ -109,21 +109,21 @@ function loadModal(id,red,pass,fechareg){
 }
 
 function cancelarUpdate() {
-    idUpdate= null;
+    idUpdate = null;
 }
 
-function loadDelete(idRed){
-    idDetele= parseInt(idRed);
+function loadDelete(idRed) {
+    idDetele = parseInt(idRed);
     $('#modalDelete').modal('show');
 }
 
 function cancelarDelete() {
- idDetele=null;   
+    idDetele = null;
 }
 
-async function deleteRed(){
+async function deleteRed() {
     if (idDetele === null) {
-        
+
         return;
     }
     $('#modalDelete').modal('hide');
@@ -144,8 +144,8 @@ async function deleteRed(){
         const jsonData = await response.json();
         jsonData['status'] === 200 ? msgToast(9) : msgToast(10);
 
-        idDetele=null;
-        
+        idDetele = null;
+
         getList();
 
     } catch (error) {
@@ -153,20 +153,20 @@ async function deleteRed(){
     }
 }
 
-function validateCreate(){
+function validateCreate() {
     const red = document.getElementById('newName').value.trim();
     const pass = document.getElementById('newPass').value.trim();
     if (red === '' || pass === '') {
-      msgToast(11);
-    }else{
+        msgToast(11);
+    } else {
         $('#modalRed').modal('hide');
 
         createList();
     }
-    
+
 }
 
-async function createList(){
+async function createList() {
     try {
         const response = await fetch(window.AppData.createLisDark, {
             method: 'POST',
@@ -175,7 +175,7 @@ async function createList(){
             },
             body: JSON.stringify({
                 newName: document.getElementById('newName').value,
-                newPass: document.getElementById('newPass') .value
+                newPass: cifrarAES(document.getElementById('newPass').value)
             })
 
         });
@@ -216,7 +216,7 @@ async function updateList() {
             body: JSON.stringify({
                 idRed: parseInt(idUpdate),
                 EditName: document.getElementById('EditName').value,
-                EditPass: document.getElementById('EditPass').value
+                EditPass: cifrarAES(document.getElementById('EditPass').value)
             })
 
         });
@@ -228,11 +228,16 @@ async function updateList() {
         const jsonData = await response.json();
         jsonData['status'] === 200 ? msgToast(12) : msgToast(14);
 
-        idUpdate= null;
+        idUpdate = null;
 
         getList();
 
     } catch (error) {
         console.error('Ocurrió un error Api #4:', error);
     }
+}
+
+function togglePasswordEdit() {
+    const input = document.getElementById("EditPass");
+    input.type = input.type === "password" ? "text" : "password";
 }

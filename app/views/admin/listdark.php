@@ -68,6 +68,10 @@
                     <div class="form-floating">
                         <input type="text" class="form-control" id="EditPass" placeholder="Red Example">
                         <label for="EditPass">Contraseña</label>
+                        <button type="button" class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                            onclick="togglePasswordEdit()" tabindex="-1" style="background: none; border: none; outline: none; box-shadow: none;">
+                            👁️
+                        </button>
                     </div>
                     <br>
                     <div class="form-floating">

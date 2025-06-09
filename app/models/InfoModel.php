@@ -46,6 +46,18 @@ class InfoModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getOnlyRedes($id){
+        $stmt = $this->db->prepare("
+            SELECT info.id, info.red, info.pass, info.fechareg, info.fechamod
+            FROM info
+            LEFT JOIN suscripcion 
+            ON suscripcion.id_info = info.id AND suscripcion.id_usuario = :id_usuario
+            WHERE suscripcion.id IS NULL
+        ");
+        $stmt->execute(['id_usuario' => $id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function saveRed(array $data): array{
         $checkStmt = $this->db->prepare("SELECT COUNT(*) FROM info WHERE red = :red");
         $checkStmt->execute([':red' => $data['newName']]);

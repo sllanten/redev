@@ -111,6 +111,17 @@ class ApiController extends Controller
         echo json_encode($msgModel->getAllRedes());
     }
 
+    public function getListNewSub(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        $id = (int)$data['code'];
+
+        $msgModel = $this->model('InfoModel');
+        echo json_encode($msgModel->getOnlyRedes($id));
+    }
+
     public function deleteRed(){
         $this->guardApiMidware();
 

@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="form-floating mb-3 text-black">
-                        <input type="date" class="form-control" id="idCod" placeholder="Example" >
+                        <input type="date" class="form-control" id="idCod" placeholder="Example">
                         <label for="filtroCodig">Fecha limite</label>
                     </div>
 
@@ -128,6 +128,34 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!--ModalAddClien-->
+    <div class="modal fade" id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Nuevo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="nameClient" placeholder="Example">
+                        <label for="filtroCodig">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="idCod" placeholder="Example">
+                        <label for="filtroCodig">Codigo de cliente</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Crear Cliente</button>
+                </div>
             </div>
         </div>
     </div>
@@ -168,7 +196,7 @@
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalMessage">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Cliente" data-bs-toggle="modal" data-bs-target="#modalNewCliente">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>

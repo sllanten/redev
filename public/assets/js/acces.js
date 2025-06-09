@@ -1,7 +1,7 @@
 console.log("corriendo script AccesNode");
 console.log("Api Cliente", window.AppData.getCliente);
 console.log("Api Suscripcion", window.AppData.getSubs);
-console.log("Api ListDark", window.AppData.getLisDark);
+console.log("Api ListDark", window.AppData.getOnlyRedes);
 
 let datosClient = [];
 let filtradosClient = [];
@@ -66,7 +66,7 @@ const mostrarSubs = () => {
             <tr>
                 <th scope="row">${item.id}</th>
                 <td>${item.red}</td>
-                <td>${item.pass}</td>
+                <td>${descifrarAES(item.pass)}</td>
                 <td>${item.fecha}</td>
                 <td>
                     <button class="devBtn btn btn-sm btn-secondary text-white" onclick="verSubs(${item.id})">Renovar</button>
@@ -147,7 +147,7 @@ const mostrarCliente = () => {
                     &nbsp
                     <button class="devBtn btn btn-sm btn-danger text-white" onclick="delSubs(${item.id})">Eliminar</button>
                     &nbsp
-                    <button class="btn btn-sm btn-warning text-white" onclick="getList(${item.codigo})">Suscripcion</button>
+                    <button class="btn btn-sm btn-warning text-white" onclick="getList(${item.codigo},${item.id})">Suscripcion</button>
                 </td>
             </tr>
         `);
@@ -179,15 +179,17 @@ $('#filtroCodig').on('input', () => {
     mostrarCliente();
 });
 
-async function getList(code) {
+async function getList(code,id) {
     document.getElementById('idCod').value= code;
 
     try {
-        const response = await fetch(window.AppData.getLisDark, {
+        const response = await fetch(window.AppData.getOnlyRedes, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ code: parseInt(id) })
+
         });
 
         if (!response.ok) {
