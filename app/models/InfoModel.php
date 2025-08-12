@@ -6,10 +6,22 @@ use PDO;
 
 class InfoModel extends Model
 {
+
+    public function saveSuscription(array $data): array{
+        $stmt = $this->db->prepare("INSERT INTO suscripcion (id_usuario, id_info, estado ,fecha) VALUES (:idUser, :idRed, :estado, :fecha)");
+        $success = $stmt->execute([
+            ':idUser' => $data['idUser'],
+            ':idRed' => $data['idRed'],
+            ':estado' => 1,
+            ':fecha' => $data['fecha']
+        ]);
+        return $success ? ['status' => 200] : ['status' => 401];
+    }
+
     public function getSuscription($codigo): ?array{
         $stmt = $this->db->prepare("
         SELECT 
-            i.id,
+            s.id,
             i.red,
             i.pass,
             s.fecha,
@@ -38,6 +50,14 @@ class InfoModel extends Model
             ];
         }
 
+    }
+
+    public function deleteSuscription(int $id): ?array{
+        $stmt = $this->db->prepare("UPDATE suscripcion SET estado = 2 WHERE id = :id");
+        $success = $stmt->execute([
+            ':id' => (int)$id
+        ]);
+        return $success ? ['status' => 200] : ['status' => 401];
     }
 
     public function getAllRedes(){

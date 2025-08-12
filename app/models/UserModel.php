@@ -13,7 +13,7 @@ class UserModel extends Model
             u.id,
             u.nombre,
             u.codigo,
-            COUNT(s.id_usuario) AS suscripcion
+            COUNT(CASE WHEN s.estado = 1 THEN 1 END) AS suscripcion
         FROM 
             usuario u
         LEFT JOIN 

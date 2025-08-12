@@ -10,7 +10,9 @@
         'deleteLisDark' => $indexed[10]['url'],
         'createLisDark' => $indexed[11]['url'],
         'updateLisDark' => $indexed[12]['url'],
-        'getOnlyRedes' => $indexed[13]['url']
+        'getOnlyRedes' => $indexed[13]['url'],
+        'deleteSub' => $indexed[14]['url'],
+        'createSubs' => $indexed[2]['url']
     ];
     ?>
 
