@@ -203,4 +203,11 @@ class ApiController extends Controller
         $infoModel= $this->model('InfoModel');
         echo json_encode($infoModel->updateRed($data));
     }
+
+    public function getEndPointApi(){
+        $this->guardApiMidware();
+
+        $apiModel= $this->model('ApiModel');
+        echo json_encode($apiModel->getEndPointApi());
+    }
 }

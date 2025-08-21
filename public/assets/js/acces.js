@@ -284,10 +284,6 @@ function cancelDelSub(){
 
 }
 
-function resetLIst() {
-    contReg = 0;
-}
-
 async function delSubs(){
 
     try {

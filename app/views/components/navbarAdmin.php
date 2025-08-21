@@ -12,7 +12,9 @@
         'updateLisDark' => $indexed[12]['url'],
         'getOnlyRedes' => $indexed[13]['url'],
         'deleteSub' => $indexed[14]['url'],
-        'createSubs' => $indexed[2]['url']
+        'createSubs' => $indexed[2]['url'],
+        'getEndpointApi' => $indexed[7]['url'],
+        'getMessage' => $indexed[5]['url']
     ];
     ?>
 
