@@ -37,6 +37,7 @@ CREATE TABLE mensajes (
     id_usuario INT NOT NULL,
     mensaje TEXT NOT NULL,
     tipo TEXT NOT NULL,
+    class TEXT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
