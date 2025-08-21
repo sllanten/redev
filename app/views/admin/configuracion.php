@@ -188,8 +188,8 @@
 
         <h2 class="pb-2 py-4">Mensajes</h2>
         <div class="form-floating mb-3 text-black">
-            <input type="search" class="form-control" id="searchMessage" placeholder="SearchMessage Example">
-            <label for="searchMessage">Buscar Mensaje</label>
+            <input type="search" class="form-control" id="filtroNombre" placeholder="filtroNombre Example">
+            <label for="filtroNombre">Buscar Mensaje</label>
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
@@ -204,91 +204,22 @@
                         <th scope="col">Opcion</th>
                     </tr>
                 </thead>
-                <tbody class="text-white">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Welcome guest, enjoy!</td>
-                        <td><span class="badge bg-secondary">Sistema</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>La suscripcion ha sido realizada con exito.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>La suscripcion ha sido cancelada.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>La suscripcion ha sido reanudada con exito.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>No tienes activa una suscripcion.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td colspan="2">
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>La suscripcion se esta validando.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
-                        <td>La suscripcion esta pronto a finalizar,para renovarla ingresa a la pestaña Suscripcion.</td>
-                        <td><span class="badge bg-primary">Suscripcion</span></td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditMessage">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
+                <tbody class="text-white" id="tablaDatos">
+
                 </tbody>
             </table>
             <!-- Paginación -->
             <div class="d-flex justify-content-between align-items-center">
-                <button id="anterior" class="btn btn-primary">Anterior</button>
+                <button id="btnTableAnt" class="btn btn-primary">Anterior</button>
                 <span>Página <span id="paginaActual">1</span></span>
-                <button id="siguiente" class="btn btn-primary">Siguiente</button>
+                <button id="btnTableSig" class="btn btn-primary">Siguiente</button>
             </div>
         </div>
 
         <h2 class="pb-2 py-3">Endpoint</h2>
         <div class="form-floating mb-3 text-black">
-            <input type="search" class="form-control" id="searchEndpoint" placeholder="SearchEndpoint Example">
-            <label for="searchEndpoint">Buscar Endpoint</label>
+            <input type="search" class="form-control" id="filtroNombre2" placeholder="filtroNombre Example">
+            <label for="filtroNombre">Buscar Endpoint</label>
         </div>
         <input type="button" class="text-end btn btn-primary" value="Buscar">
         <input type="button" class="text-end btn btn-secondary" value="Nuevo Endpoint" data-bs-toggle="modal" data-bs-target="#modalEndpoint">
@@ -303,81 +234,15 @@
                         <th scope="col">Opcion</th>
                     </tr>
                 </thead>
-                <tbody class="text-white">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>validateCode</td>
-                        <td>Obtiene la list Dark</td>
-                        <td class="text-break">http://devsllanten.com/api/validateCode</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>createSubs</td>
-                        <td>Genera la Suscripcion</td>
-                        <td class="text-break">http://devsllanten.com/api/createSubs</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>getSubs</td>
-                        <td>Optiene las Suscripciones</td>
-                        <td class="text-break">http://devsllanten.com/api/getSubs</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>validateLogin</td>
-                        <td>Valida el ingreso al Dasboard</td>
-                        <td class="text-break">http://devsllanten.com/api/validateLogin</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>getMessage</td>
-                        <td>Obtiene todos los Mensajes</td>
-                        <td class="text-break">http://devsllanten.com/api/getMessage</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>getEndpoint</td>
-                        <td>Obtiene los EndPoint</td>
-                        <td class="text-break">http://devsllanten.com/api/getEndpoint</td>
-                        <td>
-                            <button class="devBtn btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalEditEndpoint">Editar</button>
-                            &nbsp
-                            <button class="devBtn btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete">Eliminar</button>
-                        </td>
-                    </tr>
+                <tbody id="tablaDatos2" class="text-white">
+
                 </tbody>
             </table>
             <!-- Paginación -->
             <div class="d-flex justify-content-between align-items-center">
-                <button id="anterior" class="btn btn-primary">Anterior</button>
-                <span>Página <span id="paginaActual">1</span></span>
-                <button id="siguiente" class="btn btn-primary">Siguiente</button>
+                <button id="btnTableAnt2" class="btn btn-primary">Anterior</button>
+                <span>Página <span id="paginaActual2">1</span></span>
+                <button id="btnTableSig2" class="btn btn-primary">Siguiente</button>
             </div>
         </div>
     </div>
@@ -389,4 +254,5 @@
     <?php endif; ?>
 
 </body>
+
 </html>

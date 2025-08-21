@@ -9,9 +9,15 @@
         'getLisDark' => $indexed[9]['url'],
         'deleteLisDark' => $indexed[10]['url'],
         'createLisDark' => $indexed[11]['url'],
-        'updateLisDark' => $indexed[12]['url']
+        'updateLisDark' => $indexed[12]['url'],
+        'getOnlyRedes' => $indexed[13]['url'],
+        'deleteSub' => $indexed[14]['url'],
+        'createSubs' => $indexed[2]['url'],
+        'getEndpointApi' => $indexed[7]['url'],
+        'getMessage' => $indexed[5]['url']
     ];
     ?>
+
     <script>
         window.AppData = <?= json_encode($appData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
     </script>

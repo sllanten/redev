@@ -43,7 +43,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalListLabel">Listado de Redes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetLIst();"></button>
                 </div>
                 <div class="modal-body">
 
@@ -59,7 +59,7 @@
                                 <th scope="col">id</th>
                                 <th scope="col">Red</th>
                                 <th scope="col">Pass</th>
-                                <th scope="col">Actualizada</th>
+                                <th scope="col">Fecha Limite</th>
                                 <th scope="col">Opciones</th>
                             </tr>
                         </thead>
@@ -73,7 +73,7 @@
                         <button id="btnAntModal" class="btn btn-primary">Anterior</button>
                         <span>Página <span id="paginaActualModal">1</span></span>
                         <button id="btnSigModal" class="btn btn-primary">Siguiente</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Listado</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetLIst();">Cerrar Listado</button>
                     </div>
                 </div>
 
@@ -93,11 +93,12 @@
                     <div class="form-floating mb-3 text-black">
                         <input type="text" class="form-control" id="idCod" placeholder="Example" value="" disabled>
                         <label for="filtroCodig">Codigo de cliente</label>
+                        <input type="hidden" id="idUser">
                     </div>
 
                     <div class="form-floating mb-3 text-black">
-                        <input type="date" class="form-control" id="idCod" placeholder="Example" >
-                        <label for="filtroCodig">Fecha limite</label>
+                        <input type="date" class="form-control" id="fechaLimt" placeholder="Example">
+                        <label for="fechaLimt">Fecha limite</label>
                     </div>
 
                     <!-- Buscador -->
@@ -124,10 +125,39 @@
                         <button id="btnAntModalNew" class="btn btn-primary">Anterior</button>
                         <span>Página <span id="paginaActualModalNew">1</span></span>
                         <button id="btnSigModalNew" class="btn btn-primary">Siguiente</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeMod();">Cerrar Listado</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-warning text-white" data-bs-dismiss="modal" onclick="saveSus()">Generar</button>
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!--ModalAddClien-->
+    <div class="modal fade" id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Nuevo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="nameClient" placeholder="Example">
+                        <label for="filtroCodig">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="idCod" placeholder="Example">
+                        <label for="filtroCodig">Codigo de cliente</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Crear Cliente</button>
+                </div>
             </div>
         </div>
     </div>
@@ -141,11 +171,30 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h3>Seguro de eliminar</h3>
+                    <h3>Seguro de eliminar suscripcion?</h3>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDelSub();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="delSubs();">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ModalDelete-->
+    <div class="modal fade" id="modalDelUsu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteLabel">Devsllanten Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Seguro de eliminar el usuario.</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDel();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="delSubs();">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -168,7 +217,7 @@
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalMessage">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Cliente" data-bs-toggle="modal" data-bs-target="#modalNewCliente">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>

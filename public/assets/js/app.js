@@ -84,3 +84,19 @@ async function salir() {
         console.error('Ocurrió un error #1:', error);
     }
 }
+
+const secretKey = "clave_secreta_123"; // ¡CAMBIA esta clave por una más segura!
+
+function cifrarAES(texto) {
+    return CryptoJS.AES.encrypt(texto, secretKey).toString();
+}
+
+function descifrarAES(textoCifrado) {
+    try {
+        const bytes = CryptoJS.AES.decrypt(textoCifrado, secretKey);
+        return bytes.toString(CryptoJS.enc.Utf8);
+    } catch (e) {
+        console.error("Error al descifrar:", e);
+        return "";
+    }
+}

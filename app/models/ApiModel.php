@@ -22,4 +22,10 @@ class ApiModel extends Model
 
         return $formatted;
     }
+    
+    public function getEndPointApi(){
+        $stmt = $this->db->prepare("SELECT id, descripcion ,nombre, url FROM api");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

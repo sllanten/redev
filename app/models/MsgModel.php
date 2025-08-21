@@ -6,20 +6,10 @@ use PDO;
 
 class MsgModel extends Model
 {
-    public function getMsg(): array{
-        $stmt = $this->db->prepare("SELECT id, mensaje FROM mensajes");
+    public function getMsg(){
+        $stmt = $this->db->prepare("SELECT id, mensaje, tipo,class FROM mensajes");
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $formatted = [];
-        foreach ($result as $row) {
-            $formatted[] = [
-                'id' => $row['id'],
-                'message' => $row['mensaje']
-            ];
-        }
-
-        return $formatted;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getMsgOnly(int $id): array{
@@ -28,6 +18,6 @@ class MsgModel extends Model
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result ?: ['message' => null];
-    }    
+    }
 
 }

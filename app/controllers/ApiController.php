@@ -94,6 +94,36 @@ class ApiController extends Controller
         echo json_encode($msgModel->getAllUser());
     }
 
+    public function createSubs(){
+        $this->guardApiMidware();
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $msgModel = $this->model('InfoModel');
+
+        $resultados = [];
+
+        foreach ($data['checkRed'] as $idRed) {
+            $registro = [
+                'idRed' => $idRed,
+                'idUser' => (int)$data['idUser'],
+                'fecha' => $data['fechaLimt']
+            ];
+
+            $resultado = $msgModel->saveSuscription($registro);
+            $resultados[] = [
+                'idRed' => $idRed,
+                'status' => $resultado['status']
+            ];
+        }
+
+        echo json_encode([
+            'total' => count($resultados),
+            'insertados' => count(array_filter($resultados, fn($r) => $r['status'] === 200)),
+            'fallidos' => count(array_filter($resultados, fn($r) => $r['status'] !== 200)),
+            'detalles' => $resultados
+        ]);
+    }
+
     public function getSubs(){
         $this->guardApiMidware();
 
@@ -109,6 +139,27 @@ class ApiController extends Controller
 
         $msgModel = $this->model('InfoModel');
         echo json_encode($msgModel->getAllRedes());
+    }
+
+    public function deleteSub(){
+        $this->guardApiMidware();
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = (int)$data['code'] ?? '';
+
+        $msgModel = $this->model('InfoModel');
+        echo json_encode($msgModel->deleteSuscription($id));
+    }
+
+    public function getListNewSub(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        $id = (int)$data['code'];
+
+        $msgModel = $this->model('InfoModel');
+        echo json_encode($msgModel->getOnlyRedes($id));
     }
 
     public function deleteRed(){
@@ -151,5 +202,12 @@ class ApiController extends Controller
         
         $infoModel= $this->model('InfoModel');
         echo json_encode($infoModel->updateRed($data));
+    }
+
+    public function getEndPointApi(){
+        $this->guardApiMidware();
+
+        $apiModel= $this->model('ApiModel');
+        echo json_encode($apiModel->getEndPointApi());
     }
 }

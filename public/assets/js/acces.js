@@ -1,7 +1,9 @@
 console.log("corriendo script AccesNode");
 console.log("Api Cliente", window.AppData.getCliente);
 console.log("Api Suscripcion", window.AppData.getSubs);
-console.log("Api ListDark", window.AppData.getLisDark);
+console.log("Api ListDark", window.AppData.getOnlyRedes);
+console.log("Api DeleteSub", window.AppData.deleteSub);
+console.log("Api createSubs", window.AppData.createSubs);
 
 let datosClient = [];
 let filtradosClient = [];
@@ -18,6 +20,11 @@ let filtradosRed = [];
 let paginaRed = 1;
 const regPagRed = 10;
 
+let idDelSub = 0;
+let idDelUser = 0;
+
+const selected = [];
+let contReg= 0;
 
 $(document).ready(function () {
     getUser();
@@ -62,16 +69,17 @@ const mostrarSubs = () => {
     $('#tablaDatos2').empty();
 
     datosPagina.forEach(item => {
+        contReg++
         $('#tablaDatos2').append(`
             <tr>
-                <th scope="row">${item.id}</th>
+                <th scope="row">${contReg}</th>
                 <td>${item.red}</td>
-                <td>${item.pass}</td>
+                <td>${descifrarAES(item.pass)}</td>
                 <td>${item.fecha}</td>
                 <td>
                     <button class="devBtn btn btn-sm btn-secondary text-white" onclick="verSubs(${item.id})">Renovar</button>
                     &nbsp
-                    <button class="devBtn btn btn-sm btn-danger text-white" onclick="delSubs(${item.id})">Eliminar</button>
+                    <button class="devBtn btn btn-sm btn-danger text-white" onclick="delAsigSub(${item.id})">Eliminar</button>
                 </td>
             </tr>
         `);
@@ -145,9 +153,10 @@ const mostrarCliente = () => {
                 <td>
                     <button class="devBtn btn btn-sm btn-secondary text-white" onclick="getSubs(${item.codigo})">Ver</button>
                     &nbsp
-                    <button class="devBtn btn btn-sm btn-danger text-white" onclick="delSubs(${item.id})">Eliminar</button>
+                    <button class="devBtn btn btn-sm btn-danger text-white" 
+                    data-bs-toggle="modal" data-bs-target="#modalDelUsu" onclick="delAsigUser(${item.id})">Eliminar</button>
                     &nbsp
-                    <button class="btn btn-sm btn-warning text-white" onclick="getList(${item.codigo})">Suscripcion</button>
+                    <button class="btn btn-sm btn-warning text-white" onclick="getList(${item.codigo},${item.id})">Suscripcion</button>
                 </td>
             </tr>
         `);
@@ -179,15 +188,18 @@ $('#filtroCodig').on('input', () => {
     mostrarCliente();
 });
 
-async function getList(code) {
+async function getList(code,id) {
     document.getElementById('idCod').value= code;
+    document.getElementById('idUser').value= id;
 
     try {
-        const response = await fetch(window.AppData.getLisDark, {
+        const response = await fetch(window.AppData.getOnlyRedes, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ code: parseInt(id) })
+
         });
 
         if (!response.ok) {
@@ -222,8 +234,8 @@ const mostrarList = () => {
                 <td>${item.red}</td>
                 <td>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input checkRed" type="checkbox" value="${item.id}" id="checkRed_${item.id}">
+                        <label class="form-check-label" for="checkRed_${item.id}">
                             Asignar
                         </label>
                     </div>
@@ -257,3 +269,96 @@ $('#filtroNombre2').on('input', () => {
     paginaRed = 1;
     mostrarList();
 });
+
+function delAsigSub($id){
+    idDelSub = parseInt($id);
+    $('#modalList').modal('hide');
+    $('#modalDelete').modal('show');
+
+}
+
+function cancelDelSub(){
+    idDelSub =0;
+    $('#modalDelete').modal('hide');
+    $('#modalList').modal('show');
+
+}
+
+async function delSubs(){
+
+    try {
+        $('#modalDelete').modal('hide');
+
+        const response = await fetch(window.AppData.deleteSub, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code: parseInt(idDelSub) })
+
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor no.4: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+        if (jsonData['status'] === 200) msgToast(3);
+        if (jsonData['status'] === 401) msgToast(15);
+
+        contReg = 0;
+        getUser();
+
+    } catch (error) {
+        console.error('Ocurrió un error #4:', error);
+    }
+}
+
+async function saveSus() {
+
+    document.querySelectorAll('.checkRed:checked').forEach(el => {
+        selected.push(el.value);
+    });
+
+    if (selected.length === 0) {
+        viewToas("Por favor selecciona al menos una red.");
+        return;
+    }
+
+    const data = {
+        checkRed: selected,
+        fechaLimt: document.getElementById('fechaLimt').value,
+        idUser: document.getElementById('idUser').value
+    };
+   
+
+    try {
+        const response = await fetch(window.AppData.createSubs, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const jsonData = await response.json();
+        
+        if (parseInt(jsonData['total']) >= 1){
+            msgToast(2);
+        }else{
+            viewToas("Error inesperado al intentar guardar.")
+        }
+
+        getUser();
+
+    } catch (error) {
+        console.error('Ocurrió un error al guardar las suscripciones:', error);
+        viewToas("Error inesperado al intentar guardar.")
+    }
+}
+

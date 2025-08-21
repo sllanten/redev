@@ -46,10 +46,13 @@ class AdminController extends Controller
         $this->view('admin.configuracion', [
             'title' => 'Devsllanten',
             'css' => ['/assets/css/dasboard.css'],
-            'js' => ['/assets/js/app.js'],
+            'js' => ['/assets/js/app.js', '/assets/js/admin.js'],
             'components' => [
                 'head' => [
-                    'file' => 'header'
+                    'file' => 'header',
+                    'data' => [
+                        'endpoints' => $this->getEndpoint('admin')
+                    ]
                 ],
                 'nav' => [
                     'file' => 'navbarAdmin'
