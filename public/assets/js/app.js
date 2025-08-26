@@ -86,6 +86,7 @@ async function salir() {
 }
 
 const secretKey = "clave_secreta_123"; // ¡CAMBIA esta clave por una más segura!
+const tokenSup = "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew="; // CONFIG APP
 
 function cifrarAES(texto) {
     return CryptoJS.AES.encrypt(texto, secretKey).toString();

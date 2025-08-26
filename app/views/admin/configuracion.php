@@ -21,73 +21,13 @@
     <!-- Componente-->
     <?= $component['nav'] ?? '' ?>
 
-    <!--ModalMessages-->
-    <div class="modal fade" id="modalMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog text-black">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalMessageLabel">Nuevo Mensage</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newMessage" placeholder="Message Example">
-                        <label for="newMessage">Mensaje</label>
-                    </div>
-                    <div class="form-floating">
-                        <select class="form-select" id="selectType">
-                            <option selected>Seleccione</option>
-                            <option value="1">Sistema</option>
-                            <option value="2">Suscripcion</option>
-                        </select>
-                        <label for="selectType">Indique el tipo</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--ModalEndpoint-->
-    <div class="modal fade" id="modalEndpoint" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog text-black">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEndpointLabel">Nuevo Endpoint</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newNombre" placeholder="Nombre Example">
-                        <label for="newNombre">Nombre</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newDescription" placeholder="Description Example">
-                        <label for="newDescription">Descripcion</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="newUrl" placeholder="Url Example">
-                        <label for="newUrl">Url</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--ModalEditMessage-->
     <div class="modal fade" id="modalEditMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="canEdit()"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
@@ -95,6 +35,7 @@
                         <label for="editMessage">Mensaje</label>
                     </div>
                     <div class="form-floating">
+                        <input type="hidden" id="tipoEdit">
                         <select class="form-select" id="EditselectType">
                             <option selected>Seleccione</option>
                             <option value="1">Sistema</option>
@@ -104,8 +45,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="canEdit()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validMsgEdit()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -150,7 +91,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h3>Seguro de eliminar</h3>
+                    <h3>¿Seguro de eliminar? Se enviará una solicitud al administrador para confirmar la eliminación.</h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
