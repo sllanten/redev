@@ -225,4 +225,19 @@ class ApiController extends Controller
         $msgModel = $this->model('MsgModel');
         echo json_encode($msgModel->updateMsg($data));
     }
+
+    public function createMessage(){
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+
+        $data['msg'] = $request['msg'];
+        $data['tipo'] = $request['tipo'];
+        $data['clase'] = $request['class'];
+
+        $msgModel = $this->model('MsgModel');
+        echo json_encode($msgModel->saveMsg($data));
+    }
+
 }

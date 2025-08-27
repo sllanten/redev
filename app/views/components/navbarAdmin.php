@@ -15,7 +15,8 @@
         'createSubs' => $indexed[2]['url'],
         'getEndpointApi' => $indexed[7]['url'],
         'getMessage' => $indexed[5]['url'],
-        'updateMsg' => $indexed[15]['url']
+        'updateMsg' => $indexed[15]['url'],
+        'createMsg' => $indexed[16]['url']
     ];
     ?>
 

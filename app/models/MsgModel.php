@@ -30,4 +30,15 @@ class MsgModel extends Model
         ]);
         return $success ? ['status' => 200] : ['status' => 401];
     }
+
+    public function saveMsg(array $data): array{
+        $stmt = $this->db->prepare("INSERT INTO mensajes (id_usuario ,mensaje, tipo, class) VALUES (:idUser, :msg, :tipo, :clase)");
+        $success = $stmt->execute([
+            ':idUser' => (int)getUserSeccion(),
+            ':msg' => $data['msg'],
+            ':tipo' => $data['tipo'],
+            ':clase' => $data['clase']
+        ]);
+        return $success ? ['status' => 200] : ['status' => 401];
+    }
 }

@@ -21,6 +21,37 @@
     <!-- Componente-->
     <?= $component['nav'] ?? '' ?>
 
+    <!--ModalNewMessage-->
+    <div class="modal fade" id="modalNewMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="newMessage" placeholder="Message Example">
+                        <label for="newMessage">Mensaje</label>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="NewselectType">
+                            <option selected>Seleccione</option>
+                            <option value="badge bg-secondary">Sistema</option>
+                            <option value="badge bg-primary">List Dark</option>
+                            <option value="badge bg-primary">Suscripcion</option>
+                        </select>
+                        <label for="NewselectType">Indique el tipo</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validMsgCreate()">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--ModalEditMessage-->
     <div class="modal fade" id="modalEditMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
@@ -95,7 +126,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -134,7 +165,7 @@
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalMessage">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalNewMessage">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>
