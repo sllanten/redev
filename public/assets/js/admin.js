@@ -1,5 +1,6 @@
 console.log("Corriendo script Admin");
 let idEditMessage = 0;
+let idEditEnd=0;
 
 let state = {
     message: { data: [], filtered: [], page: 1, perPage: 10 },
@@ -75,7 +76,7 @@ function renderTable(type) {
                     <td>${item.descripcion}</td>
                     <td>${item.url}</td>
                     <td>
-                        <button class="btn btn-sm btn-warning text-white" onclick="verSubs(${item.id})">Editar</button>
+                        <button class="btn btn-sm btn-warning text-white" onclick="verEnd(${item.id}, '${item.nombre}','${item.descripcion}', '${item.url}')">Editar</button>
                         <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete" onclick="canEdit(${item.id})">Eliminar</button>
                     </td>
                 </tr>
@@ -209,4 +210,98 @@ function validMsgCreate() {
     } else {
         createMsg(msg, tipo, clase);
     }
+}
+
+function validEndCreate() {
+    $("#modalNewEnd").modal("hide");
+    let nombre = document.getElementById('newNombre').value;
+    let url = document.getElementById('newUrl').value;
+    let des = document.getElementById('newDes').value;
+
+    if(nombre.trim() === "" || url.trim() === "" || des.trim() === "") {
+        msgToast(11);
+        return;
+    }else {
+        createEnd(nombre, url, des);
+    }
+}
+
+async function createEnd(nombre, url, descripcion) {
+    try {
+        const response = await fetch(window.AppData.createEndPoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, descripcion, url: url })
+        });
+
+        if (!response.ok) throw new Error(`Error del servidor (createEndPoint): ${response.status}`);
+
+        const jsonData = await response.json();
+
+        if (jsonData.status === 200) {
+
+            msgToast(26);
+        } else {
+            msgToast(27);
+        }
+
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
+
+    } catch (error) {
+        console.error("Ocurrió un error en createEndpoint:", error);
+    }
+}
+
+async function updateEnd(id, nom, des, link) {
+    try {
+        const response = await fetch(window.AppData.updateEndPoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, nom, des, link: link })
+        });
+
+        if (!response.ok) throw new Error(`Error del servidor (updateEnd): ${response.status}`);
+
+        const jsonData = await response.json();
+
+        if (jsonData.status === 200) {
+            msgToast(28);
+        } else {
+            msgToast(29);
+        }
+
+        idEditEnd = 0;
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
+
+    } catch (error) {
+        console.error("Ocurrió un error en updateEnd:", error);
+    }
+}
+
+function verEnd(id, nombre, descripcion, url){
+    idEditEnd= parseInt(id);
+    document.getElementById('editNombre').value= nombre;
+    document.getElementById('editDescription').value= descripcion;
+    document.getElementById('editUrl').value= url;
+    $("#modalEditEndpoint").modal("show");
+}
+
+function validEndEdit(){
+    $("#modalEditEndpoint").modal("hide");
+
+    const nombre = document.getElementById('editNombre').value;
+    const des = document.getElementById('editDescription').value;
+    const url = document.getElementById('editUrl').value;
+
+    if (!idEditEnd || !nombre || !des || !url) {
+        msgToast(11);
+        return;
+    }
+    updateEnd(idEditEnd, nombre, des, url);
+}
+
+function canEdit(){
+    idEditEnd=0;
 }

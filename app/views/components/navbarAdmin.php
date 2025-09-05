@@ -16,7 +16,9 @@
         'getEndpointApi' => $indexed[7]['url'],
         'getMessage' => $indexed[5]['url'],
         'updateMsg' => $indexed[15]['url'],
-        'createMsg' => $indexed[16]['url']
+        'createMsg' => $indexed[16]['url'],
+        'createEndPoint' => $indexed[17]['url'],
+        'updateEndPoint' => $indexed[18]['url']
     ];
     ?>
 

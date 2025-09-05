@@ -240,4 +240,33 @@ class ApiController extends Controller
         echo json_encode($msgModel->saveMsg($data));
     }
 
+    public function createEndPoint() {
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+
+        $data['nombre'] = $request['nombre'];
+        $data['descripcion'] = $request['descripcion'];
+        $data['url'] = $request['url'];
+
+        $msgModel = $this->model('ApiModel');
+        echo json_encode($msgModel->saveEndPoint($data));
+    }    
+
+    public function updateEndPoint() {
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+
+        $data['id'] = (int)$request['id'];
+        $data['nombre'] = $request['nom'];
+        $data['descripcion'] = $request['des'];
+        $data['url'] = $request['link'];
+
+        $msgModel = $this->model('ApiModel');
+        echo json_encode($msgModel->updateRed($data));
+    }    
+
 }

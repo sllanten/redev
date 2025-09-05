@@ -26,7 +26,7 @@
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
+                    <h5 class="modal-title" id="modalEditMessageLabel">Nuevo Mensaje</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -47,6 +47,36 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="validMsgCreate()">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ModalNewEndPoint-->
+    <div class="modal fade" id="modalNewEnd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditMessageLabel">Nuevo EndPoint</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="newNombre" placeholder="End Example">
+                        <label for="newNombre">Nombre</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="newUrl" placeholder="End Example">
+                        <label for="newUrl">Url</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="comment here" id="newDes"></textarea>
+                        <label for="newDes">Descripcion</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validEndCreate()">Crear</button>
                 </div>
             </div>
         </div>
@@ -106,8 +136,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="canEdit()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validEndEdit()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -194,7 +224,7 @@
             <label for="filtroNombre">Buscar Endpoint</label>
         </div>
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Endpoint" data-bs-toggle="modal" data-bs-target="#modalEndpoint">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Endpoint" data-bs-toggle="modal" data-bs-target="#modalNewEnd">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>
