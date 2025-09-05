@@ -22,7 +22,8 @@ function mypass_check($value, $hashed){
 function configApp(){
    return $data= [
         "tokenLink"=> "javascript:void(0);",
-        "urlBase" => "http://devsllanten.com/"
+        "urlBase" => "http://devsllanten.com/",
+        "tokenSup" => "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew="
     ];
 }
 

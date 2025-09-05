@@ -21,12 +21,12 @@
     <!-- Componente-->
     <?= $component['nav'] ?? '' ?>
 
-    <!--ModalMessages-->
-    <div class="modal fade" id="modalMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <!--ModalNewMessage-->
+    <div class="modal fade" id="modalNewMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalMessageLabel">Nuevo Mensage</h5>
+                    <h5 class="modal-title" id="modalEditMessageLabel">Nuevo Mensaje</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -35,47 +35,48 @@
                         <label for="newMessage">Mensaje</label>
                     </div>
                     <div class="form-floating">
-                        <select class="form-select" id="selectType">
+                        <select class="form-select" id="NewselectType">
                             <option selected>Seleccione</option>
-                            <option value="1">Sistema</option>
-                            <option value="2">Suscripcion</option>
+                            <option value="badge bg-secondary">Sistema</option>
+                            <option value="badge bg-primary">List Dark</option>
+                            <option value="badge bg-primary">Suscripcion</option>
                         </select>
-                        <label for="selectType">Indique el tipo</label>
+                        <label for="NewselectType">Indique el tipo</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="validMsgCreate()">Crear</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--ModalEndpoint-->
-    <div class="modal fade" id="modalEndpoint" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <!--ModalNewEndPoint-->
+    <div class="modal fade" id="modalNewEnd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEndpointLabel">Nuevo Endpoint</h5>
+                    <h5 class="modal-title" id="modalEditMessageLabel">Nuevo EndPoint</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newNombre" placeholder="Nombre Example">
+                        <input type="text" class="form-control" id="newNombre" placeholder="End Example">
                         <label for="newNombre">Nombre</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="newDescription" placeholder="Description Example">
-                        <label for="newDescription">Descripcion</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="newUrl" placeholder="Url Example">
+                        <input type="text" class="form-control" id="newUrl" placeholder="End Example">
                         <label for="newUrl">Url</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="comment here" id="newDes"></textarea>
+                        <label for="newDes">Descripcion</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="validEndCreate()">Crear</button>
                 </div>
             </div>
         </div>
@@ -87,7 +88,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditMessageLabel">Editar Mensaje</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="canEdit()"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
@@ -95,6 +96,7 @@
                         <label for="editMessage">Mensaje</label>
                     </div>
                     <div class="form-floating">
+                        <input type="hidden" id="tipoEdit">
                         <select class="form-select" id="EditselectType">
                             <option selected>Seleccione</option>
                             <option value="1">Sistema</option>
@@ -104,8 +106,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="canEdit()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validMsgEdit()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -134,8 +136,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="canEdit()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="validEndEdit()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -150,11 +152,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h3>Seguro de eliminar</h3>
+                    <h3>¿Seguro de eliminar? Se enviará una solicitud al administrador para confirmar la eliminación.</h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Confirmar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -193,7 +195,7 @@
         </div>
 
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalMessage">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Mensaje" data-bs-toggle="modal" data-bs-target="#modalNewMessage">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>
@@ -222,7 +224,7 @@
             <label for="filtroNombre">Buscar Endpoint</label>
         </div>
         <input type="button" class="text-end btn btn-primary" value="Buscar">
-        <input type="button" class="text-end btn btn-secondary" value="Nuevo Endpoint" data-bs-toggle="modal" data-bs-target="#modalEndpoint">
+        <input type="button" class="text-end btn btn-secondary" value="Nuevo Endpoint" data-bs-toggle="modal" data-bs-target="#modalNewEnd">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
                 <thead>

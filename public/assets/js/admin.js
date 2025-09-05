@@ -1,189 +1,307 @@
-console.log("corriendo script Admin");
-console.log("Api getEndpointApi: ", window.AppData.getEndpointApi);
-console.log("Api getMessage: ", window.AppData.getMessage);
+console.log("Corriendo script Admin");
+let idEditMessage = 0;
+let idEditEnd=0;
 
-let datosEndPoint = [];
-let filtradoEndPoint = [];
-let paginaEndPoint = 1;
-const regPagEndPoint = 10;
+let state = {
+    message: { data: [], filtered: [], page: 1, perPage: 10 },
+    endpoint: { data: [], filtered: [], page: 1, perPage: 10 }
+};
 
-let contReg=0;
+$(document).ready(() => {
+    fetchData("message", window.AppData.getMessage);
+    fetchData("endpoint", window.AppData.getEndpointApi);
 
-let datosMessage = [];
-let filtradoMessage = [];
-let paginaMessage= 1;
-const regPagMessage = 10;
+    $('#filtroNombre').on('input', () => {
+        filterData("message", "#filtroNombre", "mensaje");
+    });
 
-let contReg2 = 0;
+    $('#filtroNombre2').on('input', () => {
+        filterData("endpoint", "#filtroNombre2", "nombre");
+    });
 
-$(document).ready(function () {
-    getMessage();
-    getEndPoint();
+    $('#btnTableAnt').click(() => changePage("message", -1));
+    $('#btnTableSig').click(() => changePage("message", +1));
+
+    $('#btnTableAnt2').click(() => changePage("endpoint", -1));
+    $('#btnTableSig2').click(() => changePage("endpoint", +1));
 });
 
-async function getEndPoint() {
+async function fetchData(type, url) {
     try {
-        const response = await fetch(window.AppData.getEndpointApi, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" } });
+        if (!response.ok) throw new Error(`Error del servidor (${type}): ${response.status}`);
+
+        const jsonData = await response.json();
+        state[type].data = jsonData;
+        state[type].filtered = [...jsonData];
+        state[type].page = 1;
+
+        renderTable(type);
+    } catch (error) {
+        console.error(`Ocurrió un error con ${type}:`, error);
+    }
+}
+
+function renderTable(type) {
+    const { filtered, page, perPage } = state[type];
+    const inicio = (page - 1) * perPage;
+    const fin = inicio + perPage;
+    const datosPagina = filtered.slice(inicio, fin);
+
+    const tablaId = type === "message" ? "#tablaDatos" : "#tablaDatos2";
+    const paginaId = type === "message" ? "#paginaActual" : "#paginaActual2";
+    const btnAnt = type === "message" ? "#btnTableAnt" : "#btnTableAnt2";
+    const btnSig = type === "message" ? "#btnTableSig" : "#btnTableSig2";
+
+    $(tablaId).empty();
+
+    datosPagina.forEach((item, index) => {
+        if (type === "message") {
+            $(tablaId).append(`
+                <tr>
+                    <th scope="row">${inicio + index + 1}</th>
+                    <td>${item.mensaje}</td>
+                    <td><span class="${item.class}">${item.tipo}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-warning text-white" onclick="verMsg(${item.id}, '${item.mensaje}', '${item.tipo}')">Editar</button>
+                        <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete" onclick="canEdit(${item.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `);
+        } else {
+            $(tablaId).append(`
+                <tr>
+                    <th scope="row">${inicio + index + 1}</th>
+                    <td>${item.nombre}</td>
+                    <td>${item.descripcion}</td>
+                    <td>${item.url}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning text-white" onclick="verEnd(${item.id}, '${item.nombre}','${item.descripcion}', '${item.url}')">Editar</button>
+                        <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelete" onclick="canEdit(${item.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `);
+        }
+    });
+
+    $(paginaId).text(page);
+    $(btnAnt).prop("disabled", page === 1);
+    $(btnSig).prop("disabled", fin >= filtered.length);
+}
+
+function changePage(type, dir) {
+    const { page, perPage, filtered } = state[type];
+    const newPage = page + dir;
+    if (newPage > 0 && (newPage - 1) * perPage < filtered.length) {
+        state[type].page = newPage;
+        renderTable(type);
+    }
+}
+
+function filterData(type, inputId, field) {
+    const filtro = $(inputId).val().toLowerCase();
+    state[type].filtered = state[type].data.filter(item => item[field].toLowerCase().includes(filtro));
+    state[type].page = 1;
+    renderTable(type);
+}
+
+async function updateMsg(id, msg, tipo, clase) {
+    try {
+        const response = await fetch(window.AppData.updateMsg, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, msg, tipo, class: clase })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error del servidor: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Error del servidor (updateMsg): ${response.status}`);
 
         const jsonData = await response.json();
 
-        datosEndPoint = jsonData;
-        filtradoEndPoint = [...datosEndPoint];
-        paginaEndPoint = 1;
+        if (jsonData.status === 200) {
+            msgToast(16);
+        } else {
+            msgToast(18); 
+        }
 
-        mostrarEndPoint();
+        idEditMessage = 0;
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
 
     } catch (error) {
-        console.error('Ocurrió un error #1:', error);
+        console.error("Ocurrió un error en updateMsg:", error);
     }
 }
 
-const mostrarEndPoint = () => {
-    const inicio = (paginaEndPoint - 1) * regPagEndPoint;
-    const fin = inicio + regPagEndPoint;
-    const datosPagina = filtradoEndPoint.slice(inicio, fin);
-    
-
-    $('#tablaDatos2').empty();
-
-    datosPagina.forEach(item => {
-        contReg++
-        $('#tablaDatos2').append(`
-            <tr>
-                <th scope="row">${contReg}</th>
-                <td>${item.nombre}</td>
-                <td>${item.descripcion}</td>
-                <td>${item.url}</td>
-                <td>
-                    <button class="devBtn btn btn-sm btn-warning text-white" onclick="verSubs(${item.id})">Editar</button>
-                    &nbsp
-                    <button class="devBtn btn btn-sm btn-danger text-white" onclick="delAsigSub(${item.id})">Eliminar</button>
-                </td>
-            </tr>
-        `);
-    });
-
-    $('#paginaActual2').text(paginaEndPoint);
-    $('#btnTableAnt2').prop('disabled', paginaEndPoint === 1);
-    $('#btnTableSig2').prop('disabled', fin >= filtradoEndPoint.length);
-};
-
-$('#btnTableAnt2').click(() => {
-    if (paginaEndPoint > 1) {
-        paginaEndPoint--;
-        resetLIst();
-        mostrarEndPoint();
-    }
-});
-
-$('#btnTableSig2').click(() => {
-    if ((paginaEndPoint * regPagEndPoint) < filtradoEndPoint.length) {
-        paginaEndPoint++;
-        mostrarEndPoint();
-    }
-});
-
-$('#filtroNombre2').on('input', () => {
-    const filtro = $('#filtroNombre2').val().toLowerCase();
-    filtradoEndPoint = datosEndPoint.filter(item => item.nombre.toLowerCase().includes(filtro));
-    paginaEndPoint = 1;
-    resetLIst();
-    mostrarEndPoint();
-});
-
-function resetLIst() {
-    contReg = 0;
-}
-
-
-async function getMessage() {
+async function createMsg(msg, tipo, clase) {
     try {
-        const response = await fetch(window.AppData.getMessage, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const response = await fetch(window.AppData.createMsg, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ msg, tipo, class: clase })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error del servidor2: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Error del servidor (createMsg): ${response.status}`);
 
         const jsonData = await response.json();
 
-        datosMessage = jsonData;
-        filtradoMessage = [...datosMessage];
-        paginaMessage = 1;
+        if (jsonData.status === 200) {
+            
+            msgToast(20); 
+        } else {
+            msgToast(21); 
+        }
 
-        mostrarMessage();
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
 
     } catch (error) {
-        console.error('Ocurrió un error #2:', error);
+        console.error("Ocurrió un error en createMsg:", error);
     }
 }
 
-const mostrarMessage = () => {
-    const inicio = (paginaMessage - 1) * regPagEndPoint;
-    const fin = inicio + regPagMessage;
-    const datosPagina = filtradoMessage.slice(inicio, fin);
+function verMsg(id, msg, tipo) {
+    idEditMessage = id;
+    $("#editMessage").val(msg);
+    $("#tipoEdit").val(tipo);
 
+    const select = $("#EditselectType").empty();
+    const opciones = [
+        { value: "badge bg-secondary", text: "Sistema" },
+        { value: "badge bg-primary", text: "Suscripcion" },
+        { value: "badge bg-primary", text: "List Dark" }
+    ];
 
-    $('#tablaDatos').empty();
-
-    datosPagina.forEach(item => {
-        contReg2++
-        $('#tablaDatos').append(`
-            <tr>
-                <th scope="row">${contReg2}</th>
-                <td>${item.mensaje}</td>
-                <td><span class="${item.class}">${item.tipo}</span></td>
-                <td>
-                    <button class="devBtn btn btn-sm btn-warning text-white" onclick="verSubs(${item.id})">Editar</button>
-                    &nbsp
-                    <button class="devBtn btn btn-sm btn-danger text-white" onclick="delAsigSub(${item.id})">Eliminar</button>
-                </td>
-            </tr>
-        `);
+    opciones.forEach(op => {
+        select.append(new Option(op.text, op.value, false, op.text === tipo));
     });
 
-    $('#paginaActual').text(paginaMessage);
-    $('#btnTableAnt').prop('disabled', paginaMessage === 1);
-    $('#btnTableSig').prop('disabled', fin >= filtradoMessage.length);
-};
-
-$('#btnTableAnt').click(() => {
-    if (paginaMessage > 1) {
-        paginaMessage--;
-        resetLIst2();
-        mostrarMessage();
-    }
-});
-
-$('#btnTableSig').click(() => {
-    if ((paginaMessage * regPagMessage) < filtradoMessage.length) {
-        paginaMessage++;
-        mostrarMessage();
-    }
-});
-
-$('#filtroNombre').on('input', () => {
-    const filtro = $('#filtroNombre').val().toLowerCase();
-    filtradoMessage = datosMessage.filter(item => item.mensaje.toLowerCase().includes(filtro));
-    paginaMessage = 1;
-    resetLIst2();
-    mostrarMessage();
-});
-
-function resetLIst2() {
-    contReg2 = 0;
+    $("#modalEditMessage").modal("show");
 }
 
+function validMsgEdit() {
+    $("#modalEditMessage").modal("hide");
+
+    const msg = $("#editMessage").val().trim();
+    const select = $("#EditselectType")[0];
+    const clase = select.value;
+    const tipo = select.options[select.selectedIndex].text;
+
+    if (!idEditMessage || !msg || !clase || !tipo) {
+        msgToast(11);
+        return;
+    }
+    updateMsg(idEditMessage, msg, tipo, clase);
+}
+
+function validMsgCreate() {
+    $("#modalNewMessage").modal("hide");
+
+    const msg = $("#newMessage").val().trim();
+    const select = $("#NewselectType")[0];
+    const clase = select.value;
+    const tipo = select.options[select.selectedIndex].text;
+
+    if (!msg || select.selectedIndex === 0) {
+        msgToast(11);
+        return;
+    }
+    if (state.message.data.some(item => item.mensaje.toLowerCase() === msg.toLowerCase())) {
+        msgToast(22);
+    } else {
+        createMsg(msg, tipo, clase);
+    }
+}
+
+function validEndCreate() {
+    $("#modalNewEnd").modal("hide");
+    let nombre = document.getElementById('newNombre').value;
+    let url = document.getElementById('newUrl').value;
+    let des = document.getElementById('newDes').value;
+
+    if(nombre.trim() === "" || url.trim() === "" || des.trim() === "") {
+        msgToast(11);
+        return;
+    }else {
+        createEnd(nombre, url, des);
+    }
+}
+
+async function createEnd(nombre, url, descripcion) {
+    try {
+        const response = await fetch(window.AppData.createEndPoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, descripcion, url: url })
+        });
+
+        if (!response.ok) throw new Error(`Error del servidor (createEndPoint): ${response.status}`);
+
+        const jsonData = await response.json();
+
+        if (jsonData.status === 200) {
+
+            msgToast(26);
+        } else {
+            msgToast(27);
+        }
+
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
+
+    } catch (error) {
+        console.error("Ocurrió un error en createEndpoint:", error);
+    }
+}
+
+async function updateEnd(id, nom, des, link) {
+    try {
+        const response = await fetch(window.AppData.updateEndPoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, nom, des, link: link })
+        });
+
+        if (!response.ok) throw new Error(`Error del servidor (updateEnd): ${response.status}`);
+
+        const jsonData = await response.json();
+
+        if (jsonData.status === 200) {
+            msgToast(28);
+        } else {
+            msgToast(29);
+        }
+
+        idEditEnd = 0;
+        fetchData("message", window.AppData.getMessage);
+        fetchData("endpoint", window.AppData.getEndpointApi);
+
+    } catch (error) {
+        console.error("Ocurrió un error en updateEnd:", error);
+    }
+}
+
+function verEnd(id, nombre, descripcion, url){
+    idEditEnd= parseInt(id);
+    document.getElementById('editNombre').value= nombre;
+    document.getElementById('editDescription').value= descripcion;
+    document.getElementById('editUrl').value= url;
+    $("#modalEditEndpoint").modal("show");
+}
+
+function validEndEdit(){
+    $("#modalEditEndpoint").modal("hide");
+
+    const nombre = document.getElementById('editNombre').value;
+    const des = document.getElementById('editDescription').value;
+    const url = document.getElementById('editUrl').value;
+
+    if (!idEditEnd || !nombre || !des || !url) {
+        msgToast(11);
+        return;
+    }
+    updateEnd(idEditEnd, nombre, des, url);
+}
+
+function canEdit(){
+    idEditEnd=0;
+}
