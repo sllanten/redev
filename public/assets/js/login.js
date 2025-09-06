@@ -13,16 +13,14 @@ async function sendCode() {
             body: JSON.stringify({ code: codeValue })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error del servidor: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Error del servidor (validateLogin): ${response.status}`);
 
         const jsonData = await response.json();
 
         parseInt(jsonData['status']) === 200
             ? window.location.href = "http://devsllanten.com/admin/dasboard"
             : parseInt(jsonData['status']) === 403
-                ? viewToas(jsonData['message'])
+                ? respFail(jsonData['message'])
                 : null;
 
     } catch (error) {
@@ -30,9 +28,20 @@ async function sendCode() {
     }
 }
 
-function validate(){
-    let has= getCode('code');
+function validate() {
+    let has = getCode('code');
+
     if (has == "" || has == 0) return;
-    if(document.getElementById('term').checked == false) return;
-    sendCode();
+    if (has == "" || has == 0 || document.getElementById('term').checked == false) {
+        msgToast(11);
+        return;
+    } else {
+        sendCode();
+    }
+}
+
+function respFail(message) {
+    document.getElementById('code').value = null;
+    document.getElementById('term').checked = false;
+    viewToas(message);
 }

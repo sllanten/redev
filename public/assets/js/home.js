@@ -1,5 +1,4 @@
 console.log("corriendo script Home");
-console.log("Api validateCode Nueva manera: ", window.AppData.validateCode);
 
 let datos = [];
 let filtrados = [];
@@ -7,122 +6,106 @@ let pagina = 1;
 const registrosPorPagina = 10;
 
 document.addEventListener("DOMContentLoaded", () => {
-    $('#tablaDatos').empty();
+    resetApp();
+});
 
-    $('#sub').addClass('colorWarnin');
-
-    $('#list').addClass('disabledLink');
-
-    $('#btnExit').addClass('oculto');
-
-    $('#list').removeClass('colorWarnin');
-
-
-    $('#cod').attr('disabled', false);
-    $('#btnSend').attr('disabled', false); 
-
+$(document).ready(function () {
+    $("#term").on("change", validAcep);
 });
 
 async function sendCode() {
-    const codeValue = getCode('cod');
-    if (codeValue == "") return;
+    const codeValue = getCode('cod').trim();
+    if (!codeValue) return;
 
     try {
         const response = await fetch(window.AppData.validateCode, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code: codeValue })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error del servidor: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Error servidor: ${response.status}`);
 
-        const jsonData = await response.json();
-        validateResp(jsonData['status'], jsonData['textInfo'])
-        if (jsonData['info'] === 403) return;
-        if (jsonData['info'].length === 0) msgToast(5);
-        datos = jsonData['info'];
+        const { status, textInfo, info } = await response.json();
+
+        validateResp(status, textInfo);
+
+        if (status == 403 || !Array.isArray(info)) return;
+
+        if (!info.length) return msgToast(5);
+
+        datos = [...info];
         filtrados = [...datos];
         pagina = 1;
-
         mostrarPagina();
+        
+        loadList();
 
     } catch (error) {
-        console.error('Ocurrió un error #1:', error);
+        console.error('Error en sendCode:', error);
     }
 }
 
 function validateResp(status, message) {
-    if (parseInt(status) == 200) {
+    status = parseInt(status);
+    if (status === 200) {
         activeApp();
-        viewToas(message);
+    } else if (status === 403) {
+        $('#cod').val('');
     }
-
-    if (parseInt(status) == 403) {
-        document.getElementById('cod').value = "";
-        viewToas(message);
-    }
+    viewToas(message);
 }
 
 function activeApp() {
-    $('#list').removeClass('disabledLink');
-    
-    $('#btnExit').removeClass('oculto');
-
-    $('#list').addClass('colorWarnin');
-
-    $('#cod').attr('disabled', true);
-    $('#btnSend').attr('disabled', true);
-
+    toggleAppState(true);
 }
 
-function exitApp(){
+function exitApp() {
     $('#tablaDatos').empty();
+    $('#cod').val('');
+    toggleAppState(false);
+}
 
-    document.getElementById('cod').value= "";
+function toggleAppState(isActive) {
+    $('#list').toggleClass('disabledLink', !isActive)
+        .toggleClass('colorWarnin', isActive);
 
-    $('#list').addClass('disabledLink');
-    
+    $('#btnExit').toggleClass('oculto', !isActive);
+
+    $('#cod, #btnSend').prop('disabled', isActive);
+}
+
+function resetApp() {
+    $('#tablaDatos').empty();
+    $('#sub').addClass('colorWarnin');
+    $('#list').addClass('disabledLink').removeClass('colorWarnin');
     $('#btnExit').addClass('oculto');
-
-    $('#list').removeClass('colorWarnin');
-
-
-    $('#cod').attr('disabled', false);
-    $('#btnSend').attr('disabled', false); 
-
+    $('#cod, #btnSend').prop('disabled', false);
 }
 
 function test(e) {
     e.preventDefault();
-    $('#modaCont').modal('show');
+    $('#modalCont').modal('show');
 }
 
-const mostrarPagina = () => {
+function mostrarPagina() {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
     const datosPagina = filtrados.slice(inicio, fin);
 
-    $('#tablaDatos').empty();
-
-    datosPagina.forEach(item => {
-        $('#tablaDatos').append(`
-            <tr>
-                <th scope="row">${item.id}</th>
-                <td>${item.red}</td>
-                <td>${item.pass}</td>
-                <td>${item.fecha}</td>
-            </tr>
-        `);
-    });
+    $('#tablaDatos').html(datosPagina.map(item => `
+        <tr>
+            <th scope="row">${item.id}</th>
+            <td>${item.red}</td>
+            <td>${descifrarAES(item.pass)}</td>
+            <td>${item.fecha}</td>
+        </tr>
+    `).join(''));
 
     $('#paginaActual').text(pagina);
     $('#anterior').prop('disabled', pagina === 1);
     $('#siguiente').prop('disabled', fin >= filtrados.length);
-};
+}
 
 $('#anterior').click(() => {
     if (pagina > 1) {
@@ -132,7 +115,7 @@ $('#anterior').click(() => {
 });
 
 $('#siguiente').click(() => {
-    if ((pagina * registrosPorPagina) < filtrados.length) {
+    if (pagina * registrosPorPagina < filtrados.length) {
         pagina++;
         mostrarPagina();
     }
@@ -146,5 +129,33 @@ $('#filtroNombre').on('input', () => {
 });
 
 function closeMod() {
-    $('#modaCont').modal('hide');
+    $('#modalCont').modal('hide');
+}
+
+function loadList() {
+    setTimeout(() => {
+        $('#modalCont').modal('show');
+    }, 2000);
+}
+
+function validAcep() {
+    if ($("#term").is(":checked")) {
+        $("#datos").removeClass("d-none").addClass("d-block");
+        $("#nameSub").focus();
+    } else {
+        $("#datos").removeClass("d-block").addClass("d-none");
+    }
+}
+
+function valiSub(){
+
+    let dataNom = document.getElementById('nameSub').value;
+    let dataCel = document.getElementById('celSub').value ;
+    if ($("#term").is(":checked") && dataNom && dataCel) {
+        $('#modalSus').modal('hide');
+        viewToas("Su suscripcion esta pendiente por validar")
+    } else {
+        msgToast(11);
+        $("#nameSub").focus();
+    }
 }
