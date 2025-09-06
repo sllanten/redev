@@ -22,7 +22,7 @@
     <?= $component['nav'] ?? '' ?>
 
     <!--ModalNewMessage-->
-    <div class="modal fade" id="modalNewMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalNewMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,7 +53,7 @@
     </div>
 
     <!--ModalNewEndPoint-->
-    <div class="modal fade" id="modalNewEnd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalNewEnd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -83,7 +83,7 @@
     </div>
 
     <!--ModalEditMessage-->
-    <div class="modal fade" id="modalEditMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalEditMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,7 +114,7 @@
     </div>
 
     <!--ModalEditEndpoint-->
-    <div class="modal fade" id="modalEditEndpoint" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalEditEndpoint" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,7 +144,7 @@
     </div>
 
     <!--ModalDelete-->
-    <div class="modal fade" id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">

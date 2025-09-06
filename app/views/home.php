@@ -42,7 +42,7 @@
     </div>
 
     <!--ModalConte-->
-    <div class="modal fade" id="modalCont" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalCont" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -85,7 +85,7 @@
     </div>
 
     <!--ModalSub-->
-    <div class="modal fade" id="modalSus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalSus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
