@@ -73,6 +73,7 @@ class InfoModel extends Model
             LEFT JOIN suscripcion 
             ON suscripcion.id_info = info.id AND suscripcion.id_usuario = :id_usuario
             WHERE suscripcion.id IS NULL
+            OR suscripcion.estado <> 1
         ");
         $stmt->execute(['id_usuario' => $id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
