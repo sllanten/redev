@@ -38,7 +38,7 @@
     </div>
 
     <!--ModalListSub-->
-    <div class="modal fade" id="modalList" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalList" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,7 +82,7 @@
     </div>
 
     <!--ModalAddSub-->
-    <div class="modal fade" id="modalNew" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalNew" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -135,7 +135,7 @@
     </div>
 
     <!--ModalAddClien-->
-    <div class="modal fade" id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,7 +163,7 @@
     </div>
 
     <!--ModalDelete-->
-    <div class="modal fade" id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -182,7 +182,7 @@
     </div>
 
     <!--ModalDelete-->
-    <div class="modal fade" id="modalDelUsu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal " id="modalDelUsu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
@@ -193,7 +193,7 @@
                     <h3>Seguro de eliminar el usuario.</h3>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDel();">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDelSub();">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="delSubs();">Confirmar</button>
                 </div>
             </div>
@@ -216,7 +216,7 @@
             <label for="filtroCodig">Buscar cliente (por codigo)</label>
         </div>
 
-        <input type="button" class="text-end btn btn-primary" value="Buscar">
+        <input type="button" class="text-end btn btn-primary" value="Solicitudes">
         <input type="button" class="text-end btn btn-secondary" value="Nuevo Cliente" data-bs-toggle="modal" data-bs-target="#modalNewCliente">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">
