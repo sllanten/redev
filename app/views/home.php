@@ -60,7 +60,7 @@
                     <table class="table table-warning">
                         <thead>
                             <tr>
-                                <th scope="col">id</th>
+                                <th scope="col">Codigo</th>
                                 <th scope="col">Red</th>
                                 <th scope="col">Pass</th>
                                 <th scope="col">Actualizada</th>

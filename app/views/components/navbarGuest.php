@@ -4,7 +4,8 @@ foreach ($endpoints as $row) {
     $indexed[$row['id']] = $row;
 }
 $appData = [
-    'validateCode' => $indexed[1]['url']
+    'validateCode' => $indexed[1]['url'],
+    'soliSub' => $indexed[19]['url']
 ];
 ?>
 <script>

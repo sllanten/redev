@@ -200,6 +200,49 @@
         </div>
     </div>
 
+    <!--ModalSoliGet-->
+    <div class="modal " id="modalSoli" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Lista de solicitudes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Buscador -->
+                    <div class="mb-3">
+                        <input type="text" id="filtroClient" class="form-control" placeholder="Bucar por Cliente">
+                    </div>
+
+                    <!-- Tabla -->
+                    <table class="table table-warning">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Celular</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDatos4">
+                            <!-- Datos dinámicos -->
+                        </tbody>
+                    </table>
+
+                    <!-- Paginación -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button id="btnAntSoli" class="btn btn-primary">Anterior</button>
+                        <span>Página <span id="pagActualSoli">1</span></span>
+                        <button id="btnSigSoli" class="btn btn-primary">Siguiente</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Listado</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Page-->
     <div class="container px-4 py-5" id="hanging-icons">
         <div>
@@ -216,7 +259,7 @@
             <label for="filtroCodig">Buscar cliente (por codigo)</label>
         </div>
 
-        <input type="button" class="text-end btn btn-primary" value="Solicitudes">
+        <input type="button" class="text-end btn btn-primary" value="Solicitudes" onclick="getSoli();">
         <input type="button" class="text-end btn btn-secondary" value="Nuevo Cliente" data-bs-toggle="modal" data-bs-target="#modalNewCliente">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">

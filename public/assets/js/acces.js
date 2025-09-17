@@ -9,7 +9,38 @@ const regPagSub = 10;
 let datosRed = [], filtradosRed = [], paginaRed = 1;
 const regPagRed = 10;
 
-let idDelSub = 0,idEditSub = 0 ,idDelUser = 0;
+let datosSoli = [], filtradoSoli= [], paginaSoli = 1;
+const regPagSoli = 10;
+
+let idDelSub = 0,idEditSub = 0 ,idDelUser = 0, idEditSoli=0;
+
+$('#btnAntModal').click(() => { if (paginaSub > 1) { paginaSub--; mostrarSubs(); } });
+$('#btnSigModal').click(() => { if ((paginaSub * regPagSub) < filtradosSub.length) { paginaSub++; mostrarSubs(); } });
+setupFilter('#filtroNombre', () => datosSub, val => filtradosSub = val, mostrarSubs);
+
+$('#btnAnteTable').click(() => { if (paginaClient > 1) { paginaClient--; mostrarCliente(); } });
+$('#btnSigTable').click(() => { if ((paginaClient * regPagClient) < filtradosClient.length) { paginaClient++; mostrarCliente(); } });
+setupFilter('#filtroCodig', () => datosClient, val => filtradosClient = val, mostrarCliente);
+
+$('#btnAntModalNew').click(() => { if (paginaRed > 1) { paginaRed--; mostrarList(); } });
+$('#btnSigModalNew').click(() => { if ((paginaRed * regPagRed) < filtradosRed.length) { paginaRed++; mostrarList(); } });
+setupFilter('#filtroNombre2', () => datosRed, val => filtradosRed = val, mostrarList);
+
+$('#btnAntSoli').click(() => { if (paginaSoli > 1) { paginaSoli--; mostrarSoli(); } });
+$('#btnSigSoli').click(() => { if ((paginaSoli * regPagSoli) < filtradoSoli.length) { paginaSoli++; mostrarSoli(); } });
+setupFilter('#filtroClient', () => datosSoli, val => filtradoSoli = val, mostrarSoli);
+
+$(document).ready(function () {
+    getUser();
+});
+
+function loadApiRes(info) {
+    msgToast(parseInt(info))
+    setTimeout(() => {
+        getSoli();
+        $('#modalSoli').modal('show');
+    }, 2000);
+}
 
 async function apiFetch(url, body = {}) {
     try {
@@ -95,10 +126,6 @@ function mostrarSubs() {
     });
 }
 
-$('#btnAntModal').click(() => { if (paginaSub > 1) { paginaSub--; mostrarSubs(); } });
-$('#btnSigModal').click(() => { if ((paginaSub * regPagSub) < filtradosSub.length) { paginaSub++; mostrarSubs(); } });
-setupFilter('#filtroNombre', () => datosSub, val => filtradosSub = val, mostrarSubs);
-
 async function getUser() {
     try {
         const jsonData = await apiFetch(window.AppData.getCliente);
@@ -124,7 +151,7 @@ function mostrarCliente() {
             <tr>
                 <th scope="row">${item.id}</th>
                 <td>${item.nombre}</td>
-                <td>${item.codigo}</td>
+                <td>${descifrarAES(item.codigo)}</td>
                 <td>${item.suscripcion}</td>
                 <td>
                     <button class="btn btn-sm btn-secondary text-white" onclick="getSubs(${item.codigo})">Ver</button>
@@ -136,10 +163,6 @@ function mostrarCliente() {
             </tr>`
     });
 }
-
-$('#btnAnteTable').click(() => { if (paginaClient > 1) { paginaClient--; mostrarCliente(); } });
-$('#btnSigTable').click(() => { if ((paginaClient * regPagClient) < filtradosClient.length) { paginaClient++; mostrarCliente(); } });
-setupFilter('#filtroCodig', () => datosClient, val => filtradosClient = val, mostrarCliente);
 
 async function getList(code, id) {
     document.getElementById('idCod').value = code;
@@ -180,10 +203,6 @@ function mostrarList() {
     });
 }
 
-$('#btnAntModalNew').click(() => { if (paginaRed > 1) { paginaRed--; mostrarList(); } });
-$('#btnSigModalNew').click(() => { if ((paginaRed * regPagRed) < filtradosRed.length) { paginaRed++; mostrarList(); } });
-setupFilter('#filtroNombre2', () => datosRed, val => filtradosRed = val, mostrarList);
-
 function delAsigSub(id) {
     idDelSub = parseInt(id);
     $('#modalList').modal('hide');
@@ -191,12 +210,10 @@ function delAsigSub(id) {
 }
 
 function PredelAsigSub(id){
-    console.log("llevo papi: "+id);
     idDelSub= parseInt(id);
     $('#modalDelete').modal('hide');
 
 }
-
 
 function cancelDelSub() {
     idDelSub = 0;
@@ -216,6 +233,7 @@ async function delSubs() {
         console.error('Ocurrió un error en delSubs:', error);
     }
 }
+
 async function saveSus() {
     const selected = [];
     document.querySelectorAll('.checkRed:checked').forEach(el => selected.push(el.value));
@@ -246,45 +264,71 @@ async function saveSus() {
         viewToas("Error inesperado al intentar guardar.");
     }
 }
-
-async function saveSus() {
-    const selected = [];
-    document.querySelectorAll('.checkRed:checked').forEach(el => selected.push(el.value));
-
-    if (selected.length === 0) {
-        viewToas("Por favor selecciona al menos una red.");
-        return;
-    }
-
-    const data = {
-        checkRed: selected,
-        fechaLimt: document.getElementById('fechaLimt').value,
-        idUser: document.getElementById('idUser').value
-    };
-
-    console.log("📤 Enviando a createSubs:", data);
-
-    try {
-        const jsonData = await apiFetch(window.AppData.createSubs, data);
-        console.log("✅ Respuesta createSubs:", jsonData);
-
-        if (parseInt(jsonData['total']) >= 1) {
-            msgToast(2);
-        } else {
-            viewToas("Error inesperado al intentar guardar.");
-        }
-
-        getUser();
-    } catch (error) {
-        console.error('Ocurrió un error al guardar las suscripciones:', error);
-        viewToas("Error inesperado al intentar guardar.");
-    }
-}
-
 
 function resetLIst(){
 }
 
-$(document).ready(function () {
-    getUser();
-});
+async function getSoli() {
+    try {
+        const jsonData = await apiFetch(window.AppData.getSoli);
+
+        datosSoli = jsonData['data'];
+        filtradoSoli = [...datosSoli];
+        paginaSoli = 1;
+        mostrarSoli();
+
+        $('#modalSoli').modal('show');
+    } catch (error) {
+        console.error('Ocurrió un error en getSoli:', error);
+    }
+}
+
+function mostrarSoli() {
+    renderTable({
+        data: filtradoSoli,
+        page: paginaSoli,
+        perPage: regPagSoli,
+        tableId: '#tablaDatos4',
+        pageLabelId: '#pagActualSoli',
+        prevBtnId: '#btnAntSoli',
+        nextBtnId: '#btnSigSoli',
+        rowRenderer: (item, index) => `
+            <tr>
+                <th scope="row">${index}</th>
+                <td>${item.cliente}</td>
+                <td>${item.celular}</td>
+                <td>
+                    <button class="btn btn-sm btn-secondary text-white" onclick="gstSoli(${item.id},2)">Aceptar</button>
+                    &nbsp
+                    <button class="btn btn-sm btn-danger text-white" onclick="gstSoli(${item.id},3)">Cancelar</button>
+                </td>
+            </tr>`
+    });
+}
+
+async function gstSoli(id, status) {
+    const data = {
+        idSoli: parseInt(id),
+        estado: parseInt(status)
+    };
+
+    try {
+        const jsonData = await apiFetch(window.AppData.updateSoli, data );
+
+        $('#modalSoli').modal('hide');
+
+        if(parseInt(status)== 2) {
+            if (jsonData['status'] == 200) loadApiRes(28);
+            if (jsonData['status'] == 401) loadApiRes(30);
+        }
+
+        if(parseInt(status)== 3) {
+            if (jsonData['status'] == 200) loadApiRes(29);
+            if (jsonData['status'] == 401) loadApiRes(30);
+        }
+
+  
+    } catch (error) {
+        console.error('Ocurrió un error en updateSoli:', error);
+    }
+}

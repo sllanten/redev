@@ -23,11 +23,18 @@ class ApiController extends Controller
                 'info'=> $result['data']
             ];
         }
-        if ((int)$result['status']== 403) {
+        if ((int)$result['status']== 401) {
             $response = [
                 'status'    => (int)$result['status'],
                 'textInfo' => '❌ Código inválido, acceso denegado.',
-                'info'=> 403
+                'info'=> 401
+            ];
+        }
+        if ((int)$result['status']== 404) {
+            $response = [
+                'status'    => (int)$result['status'],
+                'textInfo' => '❌ No tienes activa ninguna suscripcion.',
+                'info'=> 404
             ];
         }
 
@@ -267,6 +274,41 @@ class ApiController extends Controller
 
         $msgModel = $this->model('ApiModel');
         echo json_encode($msgModel->updateRed($data));
-    }    
+    }
 
+    public function getSoli() {
+        $this->guardApiMidware();
+
+        $msgModel = $this->model('SoliModel');
+        echo json_encode($msgModel->getSoli());
+    }
+
+    public function createSoli() {
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+
+        $data['cliente'] = $request['cliente'];
+        $data['celular'] = (int)$request['celular'];        
+        $data['fecha'] = getYear();
+        $data['estado'] = 1;
+
+        $msgModel = $this->model('SoliModel');
+        echo json_encode($msgModel->saveSoli($data));
+
+    }
+
+    public function updateSoli() {
+        $this->guardApiMidware();
+
+        $input = file_get_contents("php://input");
+        $request = json_decode($input, true);
+
+        $data['idSoli'] = (int)$request['idSoli'];
+        $data['estado'] = (int)$request['estado'];
+
+        $msgModel = $this->model('SoliModel');
+        echo json_encode($msgModel->updateSoli($data));
+    }
 }
