@@ -1,4 +1,9 @@
 console.log("corriendo script App");
+const secretKey = CryptoJS.enc.Utf8.parse("12345678901234567890123456789012"); // 32 bytes (AES-256)
+const iv = CryptoJS.enc.Utf8.parse("1234567890123456"); // 16 bytes (AES block size)
+
+const secretKey2 = "clave_secreta_123"; // ¡CAMBIA esta clave por una más segura!
+const tokenSup = "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew="; // CONFIG APP
 
 $(document).ready(function () {
     const currentPath = window.location.pathname;
@@ -25,10 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-hashCode = s => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
-
 function getCode(input) {
-    let has = hashCode(document.getElementById(input).value);
+    let has = cifrarCode(document.getElementById(input).value);
     return has.toString();
 }
 
@@ -93,19 +96,52 @@ async function salir() {
     }
 }
 
-const secretKey = "clave_secreta_123"; // ¡CAMBIA esta clave por una más segura!
-const tokenSup = "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew="; // CONFIG APP
-
 function cifrarAES(texto) {
-    return CryptoJS.AES.encrypt(texto, secretKey).toString();
+    return CryptoJS.AES.encrypt(texto, secretKey2).toString();
 }
 
 function descifrarAES(textoCifrado) {
     try {
-        const bytes = CryptoJS.AES.decrypt(textoCifrado, secretKey);
+        const bytes = CryptoJS.AES.decrypt(textoCifrado, secretKey2);
         return bytes.toString(CryptoJS.enc.Utf8);
     } catch (e) {
         console.error("Error al descifrar:", e);
         return "";
+    }
+}
+
+function cifrarCode(texto) {
+    try {
+        let encrypted = CryptoJS.AES.encrypt(
+            CryptoJS.enc.Utf8.parse(texto),
+            secretKey,
+            {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            }
+        );
+        return encrypted.toString(); // Base64
+
+    } catch (e) {
+        console.error("Error al cifrar:", e);
+    }
+
+}
+
+function descifraCode(textoCifrado) {
+    try {
+        let decrypted = CryptoJS.AES.decrypt(
+            textoCifrado,
+            secretKey,
+            {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            }
+        );
+        return decrypted.toString(CryptoJS.enc.Utf8);
+    } catch (e) {
+        console.error("Error al descifrar:", e);
     }
 }

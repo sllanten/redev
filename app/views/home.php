@@ -5,6 +5,8 @@
     <title><?= $data['title']; ?></title>
     <link rel="icon" type="image/png" href="https://images.icon-icons.com/4242/PNG/512/bnb_crypto_icon_264371.png">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
     <!-- Componente-->
     <?= $component['head'] ?? '' ?>
 

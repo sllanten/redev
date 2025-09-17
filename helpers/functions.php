@@ -11,20 +11,22 @@ function dump($data){
     print_r($data);
 }
 
-function mypass($value){
-    return password_hash($value, PASSWORD_BCRYPT);
-}
-
-function mypass_check($value, $hashed){
-    return password_verify($value, $hashed);
-}
-
 function configApp(){
    return $data= [
         "tokenLink"=> "javascript:void(0);",
         "urlBase" => "http://devsllanten.com/",
-        "tokenSup" => "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew="
+        "tokenSup" => "U2FsdGVkX1/NNdXvf9tyOIhZMJnn9lcrm/aqL19f/Ew=",
+        "key"=> "12345678901234567890123456789012",
+        "iv"=> "12345678901234567890123456789012"
     ];
+}
+
+function cifrarAES($texto){
+    return base64_encode(openssl_encrypt($texto, "AES-256-CBC",  configApp()['key'], OPENSSL_RAW_DATA, configApp()['iv']));
+}
+
+function descifrarAES($texto){
+    return openssl_decrypt(base64_decode($texto), "AES-256-CBC", configApp()['key'], OPENSSL_RAW_DATA, configApp()['iv']);
 }
 
 function getYear(){
