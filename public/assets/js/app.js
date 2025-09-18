@@ -112,8 +112,10 @@ function descifrarAES(textoCifrado) {
 
 function cifrarCode(texto) {
     try {
+        const textoStr = String(texto);
+
         let encrypted = CryptoJS.AES.encrypt(
-            CryptoJS.enc.Utf8.parse(texto),
+            CryptoJS.enc.Utf8.parse(textoStr),
             secretKey,
             {
                 iv: iv,

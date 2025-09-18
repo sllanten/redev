@@ -20,7 +20,8 @@
         'createEndPoint' => $indexed[17]['url'],
         'updateEndPoint' => $indexed[18]['url'],
         'getSoli' => $indexed[23]['url'],
-        'updateSoli' => $indexed[24]['url']
+        'updateSoli' => $indexed[24]['url'],
+        'createClient' => $indexed[25]['url']
     ];
     ?>
 

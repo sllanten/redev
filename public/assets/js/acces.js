@@ -4,7 +4,7 @@ let datosClient = [], filtradosClient = [], paginaClient = 1;
 const regPagClient = 10;
 
 let datosSub = [], filtradosSub = [], paginaSub = 1;
-const regPagSub = 10;
+const regPagSub = 5;
 
 let datosRed = [], filtradosRed = [], paginaRed = 1;
 const regPagRed = 10;
@@ -12,7 +12,7 @@ const regPagRed = 10;
 let datosSoli = [], filtradoSoli= [], paginaSoli = 1;
 const regPagSoli = 10;
 
-let idDelSub = 0,idEditSub = 0 ,idDelUser = 0, idEditSoli=0;
+let idDelSub = 0,idEditSub = 0 ,idDelUser = 0, idEditClien=0;
 
 $('#btnAntModal').click(() => { if (paginaSub > 1) { paginaSub--; mostrarSubs(); } });
 $('#btnSigModal').click(() => { if ((paginaSub * regPagSub) < filtradosSub.length) { paginaSub++; mostrarSubs(); } });
@@ -35,6 +35,7 @@ $(document).ready(function () {
 });
 
 function loadApiRes(info) {
+    getUser();
     msgToast(parseInt(info))
     setTimeout(() => {
         getSoli();
@@ -97,6 +98,7 @@ async function getSubs(id) {
         mostrarSubs();
 
         $('#modalList').modal('show');
+        
     } catch (error) {
         console.error('Ocurrió un error en getSubs:', error);
     }
@@ -147,26 +149,27 @@ function mostrarCliente() {
         pageLabelId: '#paginaActualTable',
         prevBtnId: '#btnAnteTable',
         nextBtnId: '#btnSigTable',
-        rowRenderer: (item) => `
+        rowRenderer: (item, index) => `
             <tr>
-                <th scope="row">${item.id}</th>
+                <th scope="row">${index}</th>
                 <td>${item.nombre}</td>
-                <td>${descifrarAES(item.codigo)}</td>
+                <td>${descifraCode(item.codigo)}</td>
                 <td>${item.suscripcion}</td>
                 <td>
-                    <button class="btn btn-sm btn-secondary text-white" onclick="getSubs(${item.codigo})">Ver</button>
+                    <button class="btn btn-sm btn-secondary text-white" onclick="getSubs('${item.codigo}')">ListDark</button>
                     &nbsp
-                    <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelUsu" onclick="PredelAsigSub(${item.id})">Eliminar</button>
+                    <button class="btn btn-sm btn-warning text-black" onclick="getList(${item.id})">Suscripción</button>
                     &nbsp
-                    <button class="btn btn-sm btn-warning text-white" onclick="getList(${item.codigo},${item.id})">Suscripción</button>
+                    <button class="btn btn-sm btn-primary text-white" onclick="getList('${descifraCode(item.codigo)}',${item.id})">Actualizar</button>
+                    &nbsp
+                    <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelUsu" onclick="PredelAsigSub(${item.id})">Eliminar</button>                    
                 </td>
             </tr>`
     });
 }
 
-async function getList(code, id) {
-    document.getElementById('idCod').value = code;
-    document.getElementById('idUser').value = id;
+async function getList(id) {
+    idEditSub= parseInt(id);
 
     try {
         const jsonData = await apiFetch(window.AppData.getOnlyRedes, { code: parseInt(id) });
@@ -189,9 +192,9 @@ function mostrarList() {
         pageLabelId: '#paginaActualModalNew',
         prevBtnId: '#btnAntModalNew',
         nextBtnId: '#btnSigModalNew',
-        rowRenderer: (item) => `
+        rowRenderer: (item, index) => `
             <tr>
-                <th scope="row">${item.id}</th>
+                <th scope="row">${index}</th>
                 <td>${item.red}</td>
                 <td>
                     <div class="form-check">
@@ -212,7 +215,6 @@ function delAsigSub(id) {
 function PredelAsigSub(id){
     idDelSub= parseInt(id);
     $('#modalDelete').modal('hide');
-
 }
 
 function cancelDelSub() {
@@ -246,7 +248,7 @@ async function saveSus() {
     const data = {
         checkRed: selected,
         fechaLimt: document.getElementById('fechaLimt').value,
-        idUser: document.getElementById('idUser').value
+        idUser: parseInt(idEditSub)
     };
 
     try {
@@ -259,6 +261,8 @@ async function saveSus() {
         }
 
         getUser();
+        idEditSub = 0;
+
     } catch (error) {
         console.error('Ocurrió un error al guardar las suscripciones:', error);
         viewToas("Error inesperado al intentar guardar.");
@@ -298,7 +302,7 @@ function mostrarSoli() {
                 <td>${item.cliente}</td>
                 <td>${item.celular}</td>
                 <td>
-                    <button class="btn btn-sm btn-secondary text-white" onclick="gstSoli(${item.id},2)">Aceptar</button>
+                    <button class="btn btn-sm btn-secondary text-white" onclick="gstSoli(${item.id},2,'${item.cliente}','${item.celular}')">Aceptar</button>
                     &nbsp
                     <button class="btn btn-sm btn-danger text-white" onclick="gstSoli(${item.id},3)">Cancelar</button>
                 </td>
@@ -306,29 +310,91 @@ function mostrarSoli() {
     });
 }
 
-async function gstSoli(id, status) {
+async function gstSoli(id, status, client, code) {
     const data = {
         idSoli: parseInt(id),
         estado: parseInt(status)
     };
+    const data2 = {
+        client: client,
+        codigo: cifrarCode(code)
+    };
 
     try {
-        const jsonData = await apiFetch(window.AppData.updateSoli, data );
-
         $('#modalSoli').modal('hide');
 
         if(parseInt(status)== 2) {
-            if (jsonData['status'] == 200) loadApiRes(28);
-            if (jsonData['status'] == 401) loadApiRes(30);
+
+            const jsonData2 = await apiFetch(window.AppData.createClient, data2);
+
+            if (jsonData2['status'] == 200) {
+                const jsonData = await apiFetch(window.AppData.updateSoli, data);
+                loadApiRes(28);
+            }
+
+            if (jsonData2['status'] == 401) loadApiRes(30);
         }
 
         if(parseInt(status)== 3) {
+            const jsonData = await apiFetch(window.AppData.updateSoli, data);
+
             if (jsonData['status'] == 200) loadApiRes(29);
             if (jsonData['status'] == 401) loadApiRes(30);
         }
 
-  
     } catch (error) {
         console.error('Ocurrió un error en updateSoli:', error);
+    }
+}
+
+async function getClient() {
+
+    $('#modalNewCliente').modal('hide');
+
+    let nameInput = document.getElementById('nameClient');
+    let codeInput = document.getElementById('codClient');
+
+    let reqClient = nameInput.value.trim();
+    let reqCode = codeInput.value.trim();
+
+    let valido = true;
+
+    nameInput.classList.remove("is-invalid");
+    codeInput.classList.remove("is-invalid");
+
+    if (reqClient === "" || reqClient.length < 3) {
+        nameInput.classList.add("is-invalid");
+        valido = false;
+    }
+
+    if (!/^\d{4,10}$/.test(reqCode)) {
+        codeInput.classList.add("is-invalid");
+        valido = false;
+    }
+
+    if (!valido) {
+        return;
+    }
+
+    const data = {
+        client: reqClient,
+        codigo: cifrarCode(reqCode)
+    };
+
+    try {
+        const jsonData = await apiFetch(window.AppData.createClient, data);
+
+        if(jsonData['status']== 200) {
+            $("#nameClient").val("").removeClass("is-invalid");
+            $("#codClient").val("").removeClass("is-invalid");
+
+            setTimeout(() => {
+                getUser();
+                msgToast(35);
+            }, 2000);
+
+        }
+    } catch (error) {
+        console.error('Ocurrió un error en getClient:', error);
     }
 }

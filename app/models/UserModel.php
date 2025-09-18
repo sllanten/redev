@@ -25,13 +25,15 @@ class UserModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);        
     }
 
-    public function saveDataUser(array $data): bool{
+    public function saveDataUser(array $data): array{
         $stmt = $this->db->prepare("INSERT INTO usuario (nombre, codigo, rol) VALUES (:nombre, :codigo, :rol)");
-        return $stmt->execute([
+        $success =$stmt->execute([
             ':nombre' => $data['nom'],
             ':codigo' => $data['cod'],
-            ':rol' => $data['rol'],
+            ':rol' => 2,
         ]);
+        
+        return $success ? ['status' => 200] : ['status' => 401];
     }
 
     public function upDataUser(int $id, array $data): bool{
