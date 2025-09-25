@@ -403,20 +403,38 @@ async function getClient() {
 }
 
 function loadCli(idCli,client,code) {
-
-    console.log("id: "+idCli+" cliente: "+client +" cod: "+code);
-
     idEditClien= parseInt(idCli);
     
     $('#nameClientEdit').val(client);
     $('#codClientEdit').val(code);
 
     $('#modalEditCl').modal('show');
+}
+
+async function editClient(){
+    $('#modalEditCl').modal('hide');
+
+    const data = {
+        idEdit: parseInt(idEditClien),
+        clientEdit: document.getElementById('nameClientEdit').value,
+        codigoEdit: cifrarCode(document.getElementById('codClientEdit').value)
+    };
     
-    console.log("idEditar: "+idEditClien);
+    try {
+
+        const jsonData = await apiFetch(window.AppData.updateClient, data);
+        if (jsonData['status'] == 200) msgToast(37);
+        if (jsonData['status'] == 401) msgToast(39);
+        if (jsonData['status'] == 409) msgToast(38);
+
+        getUser();
+        
+    } catch (error) {
+        console.error('Ocurrió un error en updateSoli:', error);
+    }
+
 }
 
 function cancelEditSub(){
     idEditClien = 0;
-    console.log("idEditar: " + idEditClien);
 }

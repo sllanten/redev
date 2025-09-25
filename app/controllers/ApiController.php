@@ -113,6 +113,19 @@ class ApiController extends Controller
         echo json_encode($model->saveDataUser($data));
     }
 
+    public function updateClient(){
+        $this->guardApiMidware();
+
+        $request = json_decode(file_get_contents('php://input'), true);
+        $model = $this->model('UserModel');
+
+        $data['id'] = (int)$request['idEdit'];
+        $data['nom'] = $request['clientEdit'];
+        $data['cod'] = $request['codigoEdit'];
+
+        echo json_encode($model->upDataUser($data));
+    }
+
     public function createSubs(){
         $this->guardApiMidware();
 
