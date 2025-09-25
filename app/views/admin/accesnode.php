@@ -162,7 +162,6 @@
         </div>
     </div>
 
-
     <!--ModalDelete-->
     <div class="modal " id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
@@ -238,6 +237,41 @@
                         <button id="btnSigSoli" class="btn btn-primary">Siguiente</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Listado</button>
                     </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--ModalEditClien-->
+    <div class="modal " id="modalEditCl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Editar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="cancelEditSub();"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Nombre -->
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="nameClientEdit" placeholder="Example">
+                        <label for="nameClientEdit">Nombre de cliente</label>
+                        <div class="invalid-feedback">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                    </div>
+
+                    <!-- Código -->
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="codClientEdit" placeholder="Example">
+                        <label for="codClientEdit">Código</label>
+                        <div class="invalid-feedback">El código debe ser numérico y tener 10 dígitos.</div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelEditSub();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="editClient();">Confirmar</button>
                 </div>
 
             </div>

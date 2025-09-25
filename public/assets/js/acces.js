@@ -160,7 +160,10 @@ function mostrarCliente() {
                     &nbsp
                     <button class="btn btn-sm btn-warning text-black" onclick="getList(${item.id})">Suscripción</button>
                     &nbsp
-                    <button class="btn btn-sm btn-primary text-white" onclick="getList('${descifraCode(item.codigo)}',${item.id})">Actualizar</button>
+                    <button class="btn btn-sm btn-primary text-white" onclick="
+                        loadCli(${item.id},'${item.nombre}','${descifraCode(item.codigo)}')">
+                        Actualizar
+                    </button>
                     &nbsp
                     <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDelUsu" onclick="PredelAsigSub(${item.id})">Eliminar</button>                    
                 </td>
@@ -397,4 +400,23 @@ async function getClient() {
     } catch (error) {
         console.error('Ocurrió un error en getClient:', error);
     }
+}
+
+function loadCli(idCli,client,code) {
+
+    console.log("id: "+idCli+" cliente: "+client +" cod: "+code);
+
+    idEditClien= parseInt(idCli);
+    
+    $('#nameClientEdit').val(client);
+    $('#codClientEdit').val(code);
+
+    $('#modalEditCl').modal('show');
+    
+    console.log("idEditar: "+idEditClien);
+}
+
+function cancelEditSub(){
+    idEditClien = 0;
+    console.log("idEditar: " + idEditClien);
 }
