@@ -43,7 +43,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalListLabel">Listado de Redes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetLIst();"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
@@ -73,7 +73,7 @@
                         <button id="btnAntModal" class="btn btn-primary">Anterior</button>
                         <span>Página <span id="paginaActualModal">1</span></span>
                         <button id="btnSigModal" class="btn btn-primary">Siguiente</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetLIst();">Cerrar Listado</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Listado</button>
                     </div>
                 </div>
 
@@ -90,11 +90,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-floating mb-3 text-black">
-                        <input type="text" class="form-control" id="idCod" placeholder="Example" value="" disabled>
-                        <label for="filtroCodig">Codigo de cliente</label>
-                        <input type="hidden" id="idUser">
-                    </div>
 
                     <div class="form-floating mb-3 text-black">
                         <input type="date" class="form-control" id="fechaLimt" placeholder="Example">
@@ -135,28 +130,33 @@
     </div>
 
     <!--ModalAddClien-->
-    <div class="modal " id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal" id="modalNewCliente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modaContLabel">Nuevo Cliente</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
+                    <!-- Nombre -->
                     <div class="form-floating mb-3 text-black">
                         <input type="text" class="form-control" id="nameClient" placeholder="Example">
-                        <label for="filtroCodig">Nombre</label>
+                        <label for="nameClient">Nombre</label>
+                        <div class="invalid-feedback">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
                     </div>
 
+                    <!-- Código -->
                     <div class="form-floating mb-3 text-black">
-                        <input type="text" class="form-control" id="idCod" placeholder="Example">
-                        <label for="filtroCodig">Codigo de cliente</label>
+                        <input type="text" class="form-control" id="codClient" placeholder="Example">
+                        <label for="codClient">Código de cliente</label>
+                        <div class="invalid-feedback">El código debe ser numérico y tener 10 dígitos.</div>
                     </div>
-
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Crear Cliente</button>
+                    <button type="button" class="btn btn-primary" onclick="getClient();">Crear Cliente</button>
                 </div>
             </div>
         </div>
@@ -181,7 +181,7 @@
         </div>
     </div>
 
-    <!--ModalDelete-->
+    <!--ModalDeleteUsu-->
     <div class="modal " id="modalDelUsu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog text-black">
             <div class="modal-content">
@@ -196,6 +196,84 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDelSub();">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="delSubs();">Confirmar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ModalSoliGet-->
+    <div class="modal " id="modalSoli" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Lista de solicitudes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Buscador -->
+                    <div class="mb-3">
+                        <input type="text" id="filtroClient" class="form-control" placeholder="Bucar por Cliente">
+                    </div>
+
+                    <!-- Tabla -->
+                    <table class="table table-warning">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Celular</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDatos4">
+                            <!-- Datos dinámicos -->
+                        </tbody>
+                    </table>
+
+                    <!-- Paginación -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button id="btnAntSoli" class="btn btn-primary">Anterior</button>
+                        <span>Página <span id="pagActualSoli">1</span></span>
+                        <button id="btnSigSoli" class="btn btn-primary">Siguiente</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar Listado</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--ModalEditClien-->
+    <div class="modal " id="modalEditCl" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog text-black">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaContLabel">Editar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="cancelEditSub();"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Nombre -->
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="nameClientEdit" placeholder="Example">
+                        <label for="nameClientEdit">Nombre de cliente</label>
+                        <div class="invalid-feedback">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                    </div>
+
+                    <!-- Código -->
+                    <div class="form-floating mb-3 text-black">
+                        <input type="text" class="form-control" id="codClientEdit" placeholder="Example">
+                        <label for="codClientEdit">Código</label>
+                        <div class="invalid-feedback">El código debe ser numérico y tener 10 dígitos.</div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelEditSub();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="editClient();">Confirmar</button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -216,7 +294,7 @@
             <label for="filtroCodig">Buscar cliente (por codigo)</label>
         </div>
 
-        <input type="button" class="text-end btn btn-primary" value="Solicitudes">
+        <input type="button" class="text-end btn btn-primary" value="Solicitudes" onclick="getSoli();">
         <input type="button" class="text-end btn btn-secondary" value="Nuevo Cliente" data-bs-toggle="modal" data-bs-target="#modalNewCliente">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">

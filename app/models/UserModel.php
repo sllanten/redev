@@ -25,24 +25,37 @@ class UserModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);        
     }
 
-    public function saveDataUser(array $data): bool{
+    public function saveDataUser(array $data): array{
         $stmt = $this->db->prepare("INSERT INTO usuario (nombre, codigo, rol) VALUES (:nombre, :codigo, :rol)");
-        return $stmt->execute([
+        $success =$stmt->execute([
             ':nombre' => $data['nom'],
             ':codigo' => $data['cod'],
-            ':rol' => $data['rol'],
+            ':rol' => 2,
         ]);
+        
+        return $success ? ['status' => 200] : ['status' => 401];
     }
 
-    public function upDataUser(int $id, array $data): bool{
-        $fecha = getYear();
-        $stmt = $this->db->prepare("UPDATE usuario SET nombre = :nombre, codigo = :codigo , rol= :rol WHERE id = :id");
-        return $stmt->execute([
+    public function upDataUser(array $data): array {
+        $checkStmt = $this->db->prepare("SELECT COUNT(*) FROM usuario WHERE codigo = :codigo AND id != :id");
+        $checkStmt->execute([
+            ':codigo' => $data['cod'],
+            ':id'     => $data['id']
+        ]);
+        $exists = $checkStmt->fetchColumn();
+
+        if ($exists > 0) {
+            return ['status' => 409];
+        }
+
+        $stmt = $this->db->prepare("UPDATE usuario SET nombre = :nombre, codigo = :codigo WHERE id = :id");
+        $success = $stmt->execute([
             ':nombre' => $data['nom'],
             ':codigo' => $data['cod'],
-            ':rol' => $data['rol'],
-            ':id' => $id
+            ':id'     => (int)$data['id'],
         ]);
+
+        return $success ? ['status' => 200] : ['status' => 401];
     }
 
     public function delDataUser(int $id): bool{

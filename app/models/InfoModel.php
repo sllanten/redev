@@ -18,36 +18,49 @@ class InfoModel extends Model
         return $success ? ['status' => 200] : ['status' => 401];
     }
 
-    public function getSuscription($codigo): ?array{
-        $stmt = $this->db->prepare("
-        SELECT 
-            s.id,
-            i.red,
-            i.pass,
-            s.fecha,
-            u.id as idUser
-        FROM 
-            suscripcion s
-        INNER JOIN 
-            info i ON s.id_info = i.id
-        INNER JOIN 
-            usuario u ON s.id_usuario = u.id
-        WHERE 
-            s.estado = 1 AND u.codigo = :codigo;
-        ");
-        $stmt->execute([':codigo' => $codigo]);
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getSuscription($codigo): array{
 
-        if (!empty($result)) {
+        $checkStmt = $this->db->prepare("SELECT COUNT(*) FROM usuario WHERE codigo = :codigo");
+        $checkStmt->execute([':codigo' => $codigo]);
+        $exists = $checkStmt->fetchColumn();
+
+        if ($exists == 0) {
             return [
-                'status' => 200,
-                'data' => $result
-            ];
-        } else {
-            return [
-                'status' => 403,
+                'status' => 401,
                 'data' => []
             ];
+        }else {
+
+            $stmt = $this->db->prepare("
+                SELECT 
+                    s.id,
+                    i.red,
+                    i.pass,
+                    s.fecha,
+                    u.id as idUser
+                FROM 
+                    suscripcion s
+                INNER JOIN 
+                    info i ON s.id_info = i.id
+                INNER JOIN 
+                    usuario u ON s.id_usuario = u.id
+                WHERE 
+                    s.estado = 1 AND u.codigo = :codigo;
+            ");
+            $stmt->execute([':codigo' => $codigo]);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($result)) {
+                return [
+                    'status' => 200,
+                    'data' => $result
+                ];
+            } else {
+                return [
+                    'status' => 404,
+                    'data' => []
+                ];
+            }
         }
 
     }
