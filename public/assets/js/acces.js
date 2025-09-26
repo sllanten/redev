@@ -156,8 +156,10 @@ function mostrarCliente() {
                 <td>${descifraCode(item.codigo)}</td>
                 <td>${item.suscripcion}</td>
                 <td>
-                    <button class="btn btn-sm btn-secondary text-white" onclick="getSubs('${item.codigo}')">ListDark</button>
-                    &nbsp
+                    ${item.suscripcion >= 1
+                ? `<button class="btn btn-sm btn-secondary text-white" onclick="getSubs('${item.codigo}')">ListDark</button>&nbsp;`
+                : ''
+                    }
                     <button class="btn btn-sm btn-warning text-black" onclick="getList(${item.id})">Suscripción</button>
                     &nbsp
                     <button class="btn btn-sm btn-primary text-white" onclick="
