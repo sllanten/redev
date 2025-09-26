@@ -81,7 +81,9 @@ async function sendCode() {
 }
 
 function validRequest(status, texto, data){
-    if(parseInt(status)== 200) {
+    const s = parseInt(status);
+    
+    if (s == 200 && Array.isArray(data)) {
         
         toggleAppState(true);
 
@@ -95,7 +97,11 @@ function validRequest(status, texto, data){
         }, 2000);
     }
 
-    if (parseInt(status) == 404) {
+    if (s == 200 && !Array.isArray(data)) {
+        toggleAppState(true);
+    }
+
+    if (s == 404) {
         
         $('#term').prop('checked', false);
         $('#nameSub').val('');
@@ -104,7 +110,7 @@ function validRequest(status, texto, data){
         toggleAppState(true);
     } 
 
-    if (parseInt(status) == 401) $('#cod').val('');
+    if (s == 401) $('#cod').val('');
 
     viewToas(texto);
 
@@ -153,7 +159,7 @@ function valiSub(){
     if ($("#term").is(":checked") && dataNom && dataCel) {
         
         $('#modalSus').modal('hide');
-        sendSoli(dataNom,dataCel);
+        sendSoli(dataNom,cifrarCode(dataCel));
 
     } else {
         msgToast(11);
@@ -168,7 +174,7 @@ async function sendSoli(nom,num){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 cliente: nom,
-                celular: parseInt(num)
+                celular: num
             })
         });
 

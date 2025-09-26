@@ -303,7 +303,7 @@ function mostrarSoli() {
             <tr>
                 <th scope="row">${index}</th>
                 <td>${item.cliente}</td>
-                <td>${item.celular}</td>
+                <td>${descifraCode(item.celular)}</td>
                 <td>
                     <button class="btn btn-sm btn-secondary text-white" onclick="gstSoli(${item.id},2,'${item.cliente}','${item.celular}')">Aceptar</button>
                     &nbsp
@@ -320,7 +320,7 @@ async function gstSoli(id, status, client, code) {
     };
     const data2 = {
         client: client,
-        codigo: cifrarCode(code)
+        codigo: code
     };
 
     try {
