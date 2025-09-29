@@ -13,29 +13,52 @@ class ApiController extends Controller
         $data = json_decode($input, true);
         $codigo = $data['code'];
 
-        $infoModel = $this->model('InfoModel');
-        $result = $infoModel->getSuscription($codigo);
+        $soliModel= $this->model('SoliModel');
+        $result = $soliModel->getSoliOnly($codigo);
 
-        if ((int)$result['status'] == 200) {
-            $response = [
-                'status'    => (int)$result['status'],
-                'textInfo' => '✅ Código correcto, acceso concedido.',
-                'info'=> $result['data']
-            ];
-        }
-        if ((int)$result['status']== 401) {
-            $response = [
-                'status'    => (int)$result['status'],
-                'textInfo' => '❌ Código inválido, acceso denegado.',
-                'info'=> 401
-            ];
-        }
-        if ((int)$result['status']== 404) {
-            $response = [
-                'status'    => (int)$result['status'],
-                'textInfo' => '❌ No tienes activa ninguna suscripcion.',
-                'info'=> 404
-            ];
+        if ((int)$result['status']== 200 || (int)$result['status']== 401) {
+            
+            if ((int)$result['status']== 200) {
+                $response = [
+                    'status'    => (int)$result['status'],
+                    'textInfo' => 'Solititud en curso.',
+                    'info'=> 401
+                ];
+            }
+
+            if ((int)$result['status']== 401) {
+                $response = [
+                    'status'    => (int)$result['status'],
+                    'textInfo' => 'Solititud rechazada.',
+                    'info'=> 401
+                ];
+            }
+        } else {
+
+            $infoModel = $this->model('InfoModel');
+            $result = $infoModel->getSuscription($codigo);
+
+            if ((int)$result['status'] == 200) {
+                $response = [
+                    'status'    => (int)$result['status'],
+                    'textInfo' => '✅ Código correcto, acceso concedido.',
+                    'info'=> $result['data']
+                ];
+            }
+            if ((int)$result['status']== 401) {
+                $response = [
+                    'status'    => (int)$result['status'],
+                    'textInfo' => '❌ Código inválido, acceso denegado.',
+                    'info'=> 401
+                ];
+            }
+            if ((int)$result['status']== 404) {
+                $response = [
+                    'status'    => (int)$result['status'],
+                    'textInfo' => '❌ No tienes activa ninguna suscripcion.',
+                    'info'=> 404
+                ];
+            }
         }
 
         echo json_encode($response);
@@ -315,7 +338,7 @@ class ApiController extends Controller
         $request = json_decode($input, true);
 
         $data['cliente'] = $request['cliente'];
-        $data['celular'] = (int)$request['celular'];        
+        $data['celular'] = $request['celular'];        
         $data['fecha'] = getYear();
         $data['estado'] = 1;
 

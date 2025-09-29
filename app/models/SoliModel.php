@@ -12,9 +12,18 @@ class SoliModel extends Model
         $stmt->execute();
         return ["data" => $stmt->fetchAll(PDO::FETCH_ASSOC)];
     }
+    public function getSoliOnly($celular): array{
+        $stmt = $this->db->prepare("SELECT estado FROM solicitud WHERE celular = :celular LIMIT 1");
+        $stmt->execute([':celular' => $celular]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return !$row 
+            ? ['status' => 404] 
+            : ['status' => ($row['estado'] == 1 ? 200 : ($row['estado'] == 2 ? 204 : ($row['estado'] == 3 ? 401 : 400)))];
+        
+    }
 
     public function saveSoli(array $data): array{
-
         $checkStmt = $this->db->prepare("SELECT COUNT(*) FROM solicitud WHERE celular = :celular");
         $checkStmt->execute([':celular' => $data['celular']]);
         $exists = $checkStmt->fetchColumn();

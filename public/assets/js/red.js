@@ -1,8 +1,5 @@
 console.log("corriendo script Red");
-console.log("Api ListDark get", window.AppData.getLisDark);
-console.log("Api ListDark create", window.AppData.createLisDark);
-console.log("Api ListDark delete", window.AppData.deleteLisDark);
-console.log("Api ListDark update", window.AppData.updateLisDark);
+
 
 let datosRed = [];
 let filtradosRed = [];
