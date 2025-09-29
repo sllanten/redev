@@ -99,6 +99,8 @@ function validRequest(status, texto, data){
 
     if (s == 200 && !Array.isArray(data)) {
         toggleAppState(true);
+        $('#sub').addClass('disabledLink').removeClass('colorWarnin');
+        $('#list').addClass('disabledLink').removeClass('colorWarnin');
     }
 
     if (s == 404) {
