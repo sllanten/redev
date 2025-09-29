@@ -1,70 +1,98 @@
--- Seleccionar la base de datos 'dev'
+-- Crear base de datos si no existe
+CREATE DATABASE IF NOT EXISTS dev;
+
 USE dev;
 
--- Crear tabla 'usuario'
-CREATE TABLE usuario (
+-- ========================
+-- TABLA: variables
+-- ========================
+DROP TABLE IF EXISTS variables;
+
+CREATE TABLE variables (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    codigo VARCHAR(50) UNIQUE,
-    rol INT(2) NOT NULL
+    token VARCHAR(255) NOT NULL
 );
 
--- Crear tabla 'info'
+-- ========================
+-- TABLA: solicitud
+-- ========================
+DROP TABLE IF EXISTS solicitud;
+
+CREATE TABLE solicitud (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente VARCHAR(150) NOT NULL,
+    celular VARCHAR(20),
+    fecha DATETIME NOT NULL,
+    estado VARCHAR(50) NOT NULL
+);
+
+-- ========================
+-- TABLA: usuario
+-- ========================
+DROP TABLE IF EXISTS usuario;
+
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    codigo VARCHAR(100) NOT NULL,
+    rol VARCHAR(50) NOT NULL
+);
+
+-- ========================
+-- TABLA: api
+-- ========================
+DROP TABLE IF EXISTS api;
+
+CREATE TABLE api (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+    url VARCHAR(255) NOT NULL,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id) ON DELETE CASCADE
+);
+
+-- ========================
+-- TABLA: info
+-- ========================
+DROP TABLE IF EXISTS info;
+
 CREATE TABLE info (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    red VARCHAR(20),
-    pass VARCHAR(255),
-    fechareg DATE,
-    fechamod DATE,
+    red VARCHAR(100) NOT NULL,
+    pass VARCHAR(255) NOT NULL,
+    fechareg DATETIME NOT NULL,
+    fechamod DATETIME,
     id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id) ON DELETE CASCADE
 );
 
--- Crear tabla 'suscripcion'
-CREATE TABLE suscripcion (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_info INT NOT NULL,
-    estado INT(2) NOT NULL,
-    fecha DATE,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
-    FOREIGN KEY (id_info) REFERENCES info(id)
-);
+-- ========================
+-- TABLA: mensajes
+-- ========================
+DROP TABLE IF EXISTS mensajes;
 
--- Crear tabla 'mensajes'
 CREATE TABLE mensajes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     mensaje TEXT NOT NULL,
-    tipo TEXT NOT NULL,
-    class TEXT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+    tipo VARCHAR(50),
+    class VARCHAR(50),
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id) ON DELETE CASCADE
 );
 
--- Crear tabla 'api'
-CREATE TABLE api (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(25) NOT NULL,
-    descripcion TEXT NOT NULL,
-    url VARCHAR(255) NOT NULL,
-    id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
-);
+-- ========================
+-- TABLA: suscripcion
+-- ========================
+DROP TABLE IF EXISTS suscripcion;
 
--- Crear tabla 'validacion'
-CREATE TABLE validacion (
+CREATE TABLE suscripcion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    archivo VARCHAR(255) NOT NULL,
-    comentario TEXT,
-    fecha DATE,
-    estado INT(2),
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
-);
-
--- Crear tabla 'variables'
-CREATE TABLE variables(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(25) NOT NULL,
-    token VARCHAR(255) NOT NULL
+    id_info INT NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    fecha DATETIME NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_info) REFERENCES info (id) ON DELETE CASCADE
 );
