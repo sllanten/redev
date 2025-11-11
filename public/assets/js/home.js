@@ -123,9 +123,9 @@ function mostrarPagina() {
     const fin = inicio + regPag;
     const datosPagina = filtrados.slice(inicio, fin);
 
-    $('#tablaDatos').html(datosPagina.map(item => `
+    $('#tablaDatos').html(datosPagina.map((item, index) => `
         <tr>
-            <th scope="row">${item.id}</th>
+            <th scope="row">${inicio + index + 1}</th>
             <td>${item.red}</td>
             <td>${descifrarAES(item.pass)}</td>
             <td>${item.fecha}</td>
