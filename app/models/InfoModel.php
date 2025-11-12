@@ -136,4 +136,50 @@ class InfoModel extends Model
             'status' => $status
         ];
     }
+
+    public function saveMassiveRedes(array $data): array{
+        $successCount = 0;
+        $errorCount = 0;
+        $skippedCount = 0;
+        
+        $checkStmt = $this->db->prepare("SELECT COUNT(*) FROM info WHERE red = :red");
+        $stmt = $this->db->prepare("INSERT INTO info (red, pass, fechareg, fechamod, id_usuario) VALUES (:red, :pass, :fechareg, :fechamod, :id_usuario)");
+        
+        foreach ($data as $item) {
+            try {
+                // Verificar si el registro ya existe
+                $checkStmt->execute([':red' => $item['red']]);
+                $exists = $checkStmt->fetchColumn();
+                
+                if ($exists > 0) {
+                    // Omitir si ya existe
+                    $skippedCount++;
+                    continue;
+                }
+                
+                $success = $stmt->execute([
+                    ':red' => $item['red'],
+                    ':pass' => $item['pass'],
+                    ':fechareg' => $item['fechareg'],
+                    ':fechamod' => $item['fechareg'],
+                    ':id_usuario' => $item['id_usuario']
+                ]);
+                
+                if ($success) {
+                    $successCount++;
+                } else {
+                    $errorCount++;
+                }
+            } catch (\Exception $e) {
+                $errorCount++;
+            }
+        }
+        
+        return [
+            'status' => $successCount > 0 ? 200 : 401,
+            'saved' => $successCount,
+            'errors' => $errorCount,
+            'skipped' => $skippedCount
+        ];
+    }
 }
