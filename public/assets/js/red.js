@@ -46,7 +46,7 @@ const mostrarList = () => {
     const inicio = (paginaRed - 1) * regPagRed;
     const fin = inicio + regPagRed;
     const datosPagina = filtradosRed.slice(inicio, fin);
-    let index = 1
+    let index = inicio + 1;
 
     $('#tablaDatos').empty();
 
