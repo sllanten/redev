@@ -138,7 +138,7 @@
             <label for="filtroNombre">Buscar Red</label>
         </div>
 
-        <input type="button" class="text-end btn btn-primary" value="Buscar">
+        <input type="button" class="text-end btn btn-primary" id="genList" value="Obtener Redes" onclick="loaDat();">
         <input type="button" class="text-end btn btn-secondary" value="Nueva Red" onclick="loadFecha('newFecha');" data-bs-toggle="modal" data-bs-target="#modalRed">
         <div class="py-4 table-responsive">
             <table class="table" style="color: var(--bs-warning)">

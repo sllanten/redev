@@ -46,7 +46,7 @@ const mostrarList = () => {
     const inicio = (paginaRed - 1) * regPagRed;
     const fin = inicio + regPagRed;
     const datosPagina = filtradosRed.slice(inicio, fin);
-    let index = 1
+    let index = inicio + 1;
 
     $('#tablaDatos').empty();
 
@@ -237,4 +237,83 @@ async function updateList() {
 function togglePasswordEdit() {
     const input = document.getElementById("EditPass");
     input.type = input.type === "password" ? "text" : "password";
+}
+
+async function loaDat() {
+    try {
+        const userResponse = await fetch('/admin/getCurrentUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!userResponse.ok) {
+            throw new Error(`Error al obtener usuario: ${userResponse.status}`);
+        }
+
+        const userData = await userResponse.json();
+        const userId = userData.user_id;
+
+        const fileResponse = await fetch('/admin/getCrackedFile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!fileResponse.ok) {
+            throw new Error(`Error al obtener archivo: ${fileResponse.status}`);
+        }
+
+        const fileData = await fileResponse.json();
+        if (fileData.status !== 200) {
+            throw new Error('Archivo no encontrado');
+        }
+
+        const crackedData = fileData.data;
+
+        const dataToSave = crackedData.map(item => {
+            const date = new Date(item.date * 1000);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const fechareg = `${year}-${month}-${day}`;
+
+            return {
+                fechareg: fechareg,
+                red: item.essid || '',
+                pass: cifrarAES(item.psk || ''),
+                id_usuario: userId
+            };
+        });
+
+        const saveResponse = await fetch('/admin/saveCrackedData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: dataToSave })
+        });
+
+        if (!saveResponse.ok) {
+            throw new Error(`Error al guardar datos: ${saveResponse.status}`);
+        }
+
+        const saveData = await saveResponse.json();
+
+        console.log(saveData);
+        
+        
+        if (saveData['status'] === 200) {
+            viewToas(`Se almacenaron ${saveData['saved']} registros`);
+            getList();
+        } else {
+            viewToas(`Registros nuevos ${saveData['errors']}`);
+        }
+
+    } catch (error) {
+        console.error('Ocurrió un error Api #5:', error);
+        viewToas('error en al procesar los datos');
+    }
 }
