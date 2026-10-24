@@ -1,5 +1,3 @@
-console.log("corriendo script Login");
-
 async function sendCode() {
     const codeValue = getCode('code');
     if (codeValue == "") return;

@@ -1,4 +1,3 @@
-console.log("Corriendo script Admin");
 let idEditMessage = 0;
 let idEditEnd=0;
 

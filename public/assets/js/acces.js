@@ -1,5 +1,3 @@
-console.log("corriendo script AccesNode");
-
 let datosClient = [], filtradosClient = [], paginaClient = 1;
 const regPagClient = 10;
 

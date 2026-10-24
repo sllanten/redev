@@ -1,6 +1,3 @@
-console.log("corriendo script Red");
-
-
 let datosRed = [];
 let filtradosRed = [];
 let paginaRed = 1;
