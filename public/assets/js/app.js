@@ -1,4 +1,3 @@
-console.log("corriendo script App");
 const secretKey = CryptoJS.enc.Utf8.parse("12345678901234567890123456789012"); // 32 bytes (AES-256)
 const iv = CryptoJS.enc.Utf8.parse("1234567890123456"); // 16 bytes (AES block size)
 

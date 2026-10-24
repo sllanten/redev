@@ -1,5 +1,3 @@
-console.log("corriendo script Home");
-
 let datos = [];
 let filtrados = [];
 let pagina = 1;
